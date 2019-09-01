@@ -1,0 +1,16 @@
+/.metadata/
+edwith/.classpath
+edwith/.project
+Servers/.project
+edwith/.settings/org.eclipse.wst.validation.prefs
+edwith/.settings/org.eclipse.wst.jsdt.ui.superType.name
+edwith/.settings/org.eclipse.wst.jsdt.ui.superType.container
+edwith/.settings/org.eclipse.wst.common.project.facet.core.xml
+edwith/.settings/org.eclipse.wst.common.component
+edwith/.settings/org.eclipse.m2e.core.prefs
+edwith/.settings/org.eclipse.jdt.core.prefs
+edwith/.settings/org.eclipse.core.resources.prefs
+edwith/.settings/.jsdtscope
+edwith/target/classes/kr/or/connect/edwith/config/ApplicationConfig.class
+edwith/target/classes/kr/or/connect/edwith/config/DBConfig.class
+edwith/target/classes/kr/or/connect/edwith/config/WebMvcContextConfiguration.class
