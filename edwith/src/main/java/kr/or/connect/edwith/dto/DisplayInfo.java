@@ -1,7 +1,7 @@
 package kr.or.connect.edwith.dto;
 
 public class DisplayInfo {
-	private int id;//displayInfoId
+	private int displayInfoId;//displayInfoId
 	private int productId;
 	private String openingHours;
 	private String placeName;
@@ -12,11 +12,48 @@ public class DisplayInfo {
 	private String email;
 	private String createDate;
 	private String modifyDate;
-	public int getId() {
-		return id;
+	private int categoryId;
+	private String categoryName;
+	private String productDescription;
+	private String productContet;
+	private String productEvent;
+
+	
+	public int getDisplayInfoId() {
+		return displayInfoId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setDisplayInfoId(int displayInfoId) {
+		this.displayInfoId = displayInfoId;
+	}
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+	public String getProductContet() {
+		return productContet;
+	}
+	public void setProductContet(String productContet) {
+		this.productContet = productContet;
+	}
+	public String getProductEvent() {
+		return productEvent;
+	}
+	public void setProductEvent(String productEvent) {
+		this.productEvent = productEvent;
 	}
 	public int getProductId() {
 		return productId;
@@ -80,27 +117,13 @@ public class DisplayInfo {
 	}
 	@Override
 	public String toString() {
-		return "DisplayInfo [id=" + id + ", productId=" + productId + ", openingHours=" + openingHours + ", placeName="
-				+ placeName + ", placeLot=" + placeLot + ", placeStreet=" + placeStreet + ", tel=" + tel + ", homepage="
-				+ homepage + ", email=" + email + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
+		return "DisplayInfo [displayInfoId=" + displayInfoId + ", productId=" + productId + ", openingHours="
+				+ openingHours + ", placeName=" + placeName + ", placeLot=" + placeLot + ", placeStreet=" + placeStreet
+				+ ", tel=" + tel + ", homepage=" + homepage + ", email=" + email + ", createDate=" + createDate
+				+ ", modifyDate=" + modifyDate + ", categoryId=" + categoryId + ", categoryName=" + categoryName
+				+ ", productDescription=" + productDescription + ", productContet=" + productContet + ", productEvent="
+				+ productEvent + "]";
 	}
-	public DisplayInfo(int id, int productId, String openingHours, String placeName, String placeLot,
-			String placeStreet, String tel, String homepage, String email, String createDate, String modifyDate) {
-		super();
-		this.id = id;
-		this.productId = productId;
-		this.openingHours = openingHours;
-		this.placeName = placeName;
-		this.placeLot = placeLot;
-		this.placeStreet = placeStreet;
-		this.tel = tel;
-		this.homepage = homepage;
-		this.email = email;
-		this.createDate = createDate;
-		this.modifyDate = modifyDate;
-	}
-	public DisplayInfo() {
-		
-	}
+	
 	
 }
