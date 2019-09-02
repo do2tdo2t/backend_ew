@@ -19,10 +19,10 @@ import kr.or.connect.edwith.service.ProductService;
 public class ProductApiController {
 	@Autowired
 	ProductService productService;
+	
 	@GetMapping
 	public Map<String,Object> list(@RequestParam(name="start",required=false, defaultValue="0")int start, 
-				@RequestParam(name="categoryId", required=false, defaultValue="1") int categoryId,
-				@RequestParam(name="onePageCnt", required=false, defaultValue="4") int onePageCnt){
+				@RequestParam(name="categoryId", required=false, defaultValue="1") int categoryId){
 		
 		List<Product> list = productService.getProducts(categoryId,start);
 		int totalCnt = productService.getCountById(categoryId);
@@ -30,6 +30,7 @@ public class ProductApiController {
 	
 		map.put("list", list);
 		map.put("totalCnt", totalCnt);
+		
 		return map;
 	}
 	

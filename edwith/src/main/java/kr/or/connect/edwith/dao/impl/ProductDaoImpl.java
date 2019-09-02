@@ -1,4 +1,6 @@
-package kr.or.connect.edwith.dao;
+package kr.or.connect.edwith.dao.impl;
+
+import static kr.or.connect.edwith.dao.impl.ProductDaoSqls.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,14 +8,19 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+import ch.qos.logback.classic.Logger;
+import kr.or.connect.edwith.dao.ProductDao;
 import kr.or.connect.edwith.dto.Product;
-import static kr.or.connect.edwith.dao.ProductDaoSqls.*;
 
+@Repository
 public class ProductDaoImpl implements ProductDao {
+	 private Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 	 private NamedParameterJdbcTemplate jdbc;
 	    private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 
@@ -26,24 +33,20 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> selectAll(Integer categoryId, Integer limit) {
 		Map<String, Integer> params = new HashMap<>();
 		
+		logger.debug("ProductDaoImpl.. selectAll().. ");
 		params.put("limit",limit);
 		params.put("categoryId",categoryId);
 		
 		return jdbc.query(SELECT_ALL, params, rowMapper);
 	}
 
-	@Override
-	public int getCount() {
-		
-		return 0;
-	}
 
 	@Override
-	public int getCountById(Integer categoryId) {
+	public Integer getCountById(Integer categoryId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("categoryId",categoryId);
 		
-		return  jdbc.query(COUNT_BY_CATEGORY_ID, params);
+		return  jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
 	}
 
 }

@@ -1,7 +1,7 @@
 package kr.or.connect.edwith.dto;
 
 public class DisplayInfo {
-	private int id;
+	private int id;//displayInfoId
 	private int productId;
 	private String openingHours;
 	private String placeName;

@@ -1,59 +1,54 @@
 package kr.or.connect.edwith.dto;
 
 public class Product {
-	private int id;
-	private int categoryId;
-	private String description;
-	private String content;
-	private String event;
-	private String createDate;
-	private String modifyDate;
-	public int getId() {
-		return id;
+	private int displayInfoId;
+	private int productId; //productId
+	private String productDescription;
+	private String productContent;
+	private String placeName;
+	private String productImageUrl;
+	
+	public int getProductId() {
+		return productId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
-	public int getCategoryId() {
-		return categoryId;
+	public int getDisplayInfoId() {
+		return displayInfoId;
 	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setDisplayInfoId(int displayInfoId) {
+		this.displayInfoId = displayInfoId;
 	}
-	public String getDescription() {
-		return description;
+	public String getProductDescription() {
+		return productDescription;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
-	public String getContent() {
-		return content;
+	public String getProductContent() {
+		return productContent;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
 	}
-	public String getEvent() {
-		return event;
+	public String getPlaceName() {
+		return placeName;
 	}
-	public void setEvent(String event) {
-		this.event = event;
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
-	public String getCreateDate() {
-		return createDate;
+	public String getProductImageUrl() {
+		return productImageUrl;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-	public String getModifyDate() {
-		return modifyDate;
-	}
-	public void setModifyDate(String modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setProductImageUrl(String productImageUrl) {
+		this.productImageUrl = productImageUrl;
 	}
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", categoryId=" + categoryId + ", description=" + description + ", content="
-				+ content + ", event=" + event + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
+		return "Product [displayInfoId=" + displayInfoId + ", productId=" + productId + ", productDescription="
+				+ productDescription + ", productContent=" + productContent + ", placeName=" + placeName
+				+ ", productImageUrl=" + productImageUrl + "]";
 	}
-
+	
 }

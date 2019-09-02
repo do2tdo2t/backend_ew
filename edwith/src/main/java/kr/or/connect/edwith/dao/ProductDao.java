@@ -8,7 +8,5 @@ public interface ProductDao {
 
 	List<Product> selectAll(Integer categoryId, Integer limit);
 
-	int getCount();
-
-	int getCountById(Integer categoryId);
+	Integer getCountById(Integer categoryId);
 }

@@ -9,6 +9,5 @@ public interface ProductService {
 	public static final Integer ONE_PAGE_COUNT = 4;
 	public int getCountById(Integer categoryId);
 	public List<Product> getProducts(Integer categoryId, Integer limit);
-	public int getCount();
-	public DisplayInfo getDisplayInfoById(int displayInfoId);
+	public DisplayInfo getDisplayInfoById(Integer displayInfoId);
 }
