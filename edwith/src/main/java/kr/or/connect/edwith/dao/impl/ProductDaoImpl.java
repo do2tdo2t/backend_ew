@@ -1,6 +1,6 @@
 package kr.or.connect.edwith.dao.impl;
 
-import static kr.or.connect.edwith.dao.impl.ProductDaoSqls.*;
+import static kr.or.connect.edwith.dao.sql.ProductDaoSqls.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +38,7 @@ public class ProductDaoImpl implements ProductDao {
 		params.put("categoryId",categoryId);
 		
 		return jdbc.query(SELECT_PRODUCT_ALL, params, rowMapper);
+		
 	}
 
 
@@ -46,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("categoryId",categoryId);
 		
-		return  jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
+		return jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
 	}
 
 }

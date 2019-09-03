@@ -3,22 +3,21 @@ package kr.or.connect.edwith.dto;
 public class DisplayInfo {
 	private int displayInfoId;//displayInfoId
 	private int productId;
+	private int categoryId;
+	private String categoryName;
+	private String productDescription;
+	private String productContent;
+	private String productEvent;
 	private String openingHours;
 	private String placeName;
 	private String placeLot;
 	private String placeStreet;
-	private String tel;
+	private String telephone;
 	private String homepage;
 	private String email;
 	private String createDate;
 	private String modifyDate;
-	private int categoryId;
-	private String categoryName;
-	private String productDescription;
-	private String productContet;
-	private String productEvent;
 
-	
 	public int getDisplayInfoId() {
 		return displayInfoId;
 	}
@@ -43,11 +42,11 @@ public class DisplayInfo {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-	public String getProductContet() {
-		return productContet;
+	public String getProductContent() {
+		return productContent;
 	}
-	public void setProductContet(String productContet) {
-		this.productContet = productContet;
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
 	}
 	public String getProductEvent() {
 		return productEvent;
@@ -85,11 +84,11 @@ public class DisplayInfo {
 	public void setPlaceStreet(String placeStreet) {
 		this.placeStreet = placeStreet;
 	}
-	public String getTel() {
-		return tel;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	public String getHomepage() {
 		return homepage;
@@ -119,9 +118,9 @@ public class DisplayInfo {
 	public String toString() {
 		return "DisplayInfo [displayInfoId=" + displayInfoId + ", productId=" + productId + ", openingHours="
 				+ openingHours + ", placeName=" + placeName + ", placeLot=" + placeLot + ", placeStreet=" + placeStreet
-				+ ", tel=" + tel + ", homepage=" + homepage + ", email=" + email + ", createDate=" + createDate
+				+ ", telephone=" + telephone + ", homepage=" + homepage + ", email=" + email + ", createDate=" + createDate
 				+ ", modifyDate=" + modifyDate + ", categoryId=" + categoryId + ", categoryName=" + categoryName
-				+ ", productDescription=" + productDescription + ", productContet=" + productContet + ", productEvent="
+				+ ", productDescription=" + productDescription + ", productContent=" + productContent + ", productEvent="
 				+ productEvent + "]";
 	}
 	

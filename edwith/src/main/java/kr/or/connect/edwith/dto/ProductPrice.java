@@ -1,24 +1,24 @@
 package kr.or.connect.edwith.dto;
 
 public class ProductPrice {
-	private int id;
-	private int categoryId;
+	private int productPriceId;
+	private int productId;
 	private String priceTypeName;
 	private int price;
-	private double discoutRate;
+	private double discountRate;
 	private String createDate;
 	private String modifyDate;
-	public int getId() {
-		return id;
+	public int getProductPriceId() {
+		return productPriceId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setProductPriceId(int productPriceId) {
+		this.productPriceId = productPriceId;
 	}
-	public int getCategoryId() {
-		return categoryId;
+	public int getProductId() {
+		return productId;
 	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 	public String getPriceTypeName() {
 		return priceTypeName;
@@ -32,11 +32,11 @@ public class ProductPrice {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public double getDiscoutRate() {
-		return discoutRate;
+	public double getDiscountRate() {
+		return discountRate;
 	}
-	public void setDiscoutRate(double discoutRate) {
-		this.discoutRate = discoutRate;
+	public void setDiscountRate(double discountRate) {
+		this.discountRate = discountRate;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -50,11 +50,13 @@ public class ProductPrice {
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	
 	@Override
 	public String toString() {
-		return "ProductPrice [id=" + id + ", categoryId=" + categoryId + ", priceTypeName=" + priceTypeName + ", price="
-				+ price + ", discoutRate=" + discoutRate + ", createDate=" + createDate + ", modifyDate=" + modifyDate
-				+ "]";
+		return "ProductPrice [productPriceId=" + productPriceId + ", productId=" + productId + ", priceTypeName="
+				+ priceTypeName + ", price=" + price + ", discountRate=" + discountRate + ", createDate=" + createDate
+				+ ", modifyDate=" + modifyDate + "]";
 	}
+	
 	
 }
