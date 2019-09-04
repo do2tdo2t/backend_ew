@@ -36,7 +36,6 @@ public class ProductDaoImpl implements ProductDao {
 		logger.debug("ProductDaoImpl.. selectAll().. ");
 		params.put("limit",limit);
 		params.put("categoryId",categoryId);
-		
 		return jdbc.query(SELECT_PRODUCT_ALL, params, rowMapper);
 		
 	}
