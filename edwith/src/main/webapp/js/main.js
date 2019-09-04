@@ -43,6 +43,8 @@ function ajaxProductList(start, categoryId){
     
 }
 
+
+//return newUrl
 function appendParams(dict,url){
 	var isFirstParam = true;
 	for(var key in dict){
