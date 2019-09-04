@@ -38,7 +38,7 @@ ul{
     position:relative;
     float:right;
     border:none;
-    font-size:12px;
+    font-size:1.5em;
     background:none;
 }
 .gnb-img{
@@ -70,6 +70,7 @@ img{
     position:relative;
     float:left;
     text-align: center;
+    cursor:pointer;
 }
 .count-bar{
     text-align: center;
@@ -99,22 +100,47 @@ img{
     margin:1px;   
 }
 
-.product-list-col > .product-img{
-    width:100%;
+.product-img{
+    width:98%;
 }
-.product-list-col > .product-content {
-    padding:1px 0px;
+
+.product-content{
+	padding:1px 0px;
+	display:-webkit-box;
+	overflow: hidden;
+	 -webkit-line-clamp: 3;
+	 -webkit-box-orient: vertical;
+	 margin:2px;
+	 text-align:left;
+}
+.produt-description{
+	padding:5px;
+	text-align:left;
+}
+.product-underbar{
+	border:solid 0.5px; 
+	color:lightgrey; 
+	margin:3px;
 }
 
 .footer{
     text-align:center;
     margin:0 auto;
+    display:inline-block;
+    position:relative;
 }
 
-.footer > .more{
+.more{
     background-color:white;
     border:solid 1px darkgrey;
     margin:0 auto;
-    padding:0;
+    cursor:pointer;
+    padding: 10px 0
 }
+
+.move-top{
+	cursor:pointer;
+	margin: 0 auto; padding: 10px 0
+}
+
 

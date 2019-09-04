@@ -41,7 +41,7 @@ public class ProductApiController {
 		int totalCnt = productService.getCountById(categoryId);
 		Map<String,Object> map= new HashMap<String,Object>();
 	
-		map.put("list", list);
+		map.put("products", list);
 		map.put("totalCnt", totalCnt);
 		
 		return map;
