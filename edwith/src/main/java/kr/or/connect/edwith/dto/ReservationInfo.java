@@ -1,22 +1,24 @@
 package kr.or.connect.edwith.dto;
 
 public class ReservationInfo {
-	private int id;
+	private int reservationInfoId;
 	private int productId;
 	private int displayInfoId;
 	private String reservationName;
-	private String reservationTel;
+	private String reservationTelephone;
 	private String reservationEmail;
+
+	private int cancelYn;
 	private String reservationDate;
-	private int cancelFlag;
 	private String createDate;
 	private String modifyDate;
-	
-	public int getId() {
-		return id;
+	DisplayInfo displayInfo;
+	private int totalPrice;
+	public int getReservationInfoId() {
+		return reservationInfoId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setReservationInfoId(int reservationInfoId) {
+		this.reservationInfoId = reservationInfoId;
 	}
 	public int getProductId() {
 		return productId;
@@ -36,11 +38,11 @@ public class ReservationInfo {
 	public void setReservationName(String reservationName) {
 		this.reservationName = reservationName;
 	}
-	public String getReservationTel() {
-		return reservationTel;
+	public String getReservationTelephone() {
+		return reservationTelephone;
 	}
-	public void setReservationTel(String reservationTel) {
-		this.reservationTel = reservationTel;
+	public void setReservationTelephone(String reservationTelephone) {
+		this.reservationTelephone = reservationTelephone;
 	}
 	public String getReservationEmail() {
 		return reservationEmail;
@@ -48,17 +50,17 @@ public class ReservationInfo {
 	public void setReservationEmail(String reservationEmail) {
 		this.reservationEmail = reservationEmail;
 	}
+	public int getCancelYn() {
+		return cancelYn;
+	}
+	public void setCancelYn(int cancelYn) {
+		this.cancelYn = cancelYn;
+	}
 	public String getReservationDate() {
 		return reservationDate;
 	}
 	public void setReservationDate(String reservationDate) {
 		this.reservationDate = reservationDate;
-	}
-	public int getCancelFlag() {
-		return cancelFlag;
-	}
-	public void setCancelFlag(int cancelFlag) {
-		this.cancelFlag = cancelFlag;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -72,13 +74,27 @@ public class ReservationInfo {
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	public DisplayInfo getDisplayInfo() {
+		return displayInfo;
+	}
+	public void setDisplayInfo(DisplayInfo displayInfo) {
+		this.displayInfo = displayInfo;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 	
 	@Override
 	public String toString() {
-		return "ReservationInfo [id=" + id + ", productId=" + productId + ", displayInfoId=" + displayInfoId
-				+ ", reservationName=" + reservationName + ", reservationTel=" + reservationTel + ", reservationEmail="
-				+ reservationEmail + ", reservationDate=" + reservationDate + ", cancelFlag=" + cancelFlag
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
+		return "ReservationInfo [reservationInfoId=" + reservationInfoId + ", productId=" + productId
+				+ ", displayInfoId=" + displayInfoId + ", reservationName=" + reservationName
+				+ ", reservationTelephone=" + reservationTelephone + ", reservationEmail=" + reservationEmail
+				+ ", cancelYn=" + cancelYn + ", reservationDate=" + reservationDate + ", createDate=" + createDate
+				+ ", modifyDate=" + modifyDate + ", displayInfo=" + displayInfo + ", totalPrice=" + totalPrice + "]";
 	}
+	
 
 }
