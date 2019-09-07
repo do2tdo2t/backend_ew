@@ -76,4 +76,27 @@ public class ReservationDaoSqls {
 			"select count(*) "
 			+ "from reservation_info "
 			+ "where reservation_email = :reservationInfoEmail";
+	
+	public static final String INSERT_RESERVATION_INFO = 
+			"insert into reservation_info( " + 
+			" display_info_id " + 
+			" ,product_id " + 
+			" ,reservation_email " + 
+			" ,reservation_name " + 
+			" ,reservation_tel " + 
+			" ,reservation_date " + 
+			" ,cancel_flag " + 
+			" ,create_date " + 
+			" , modify_date " + 
+			") values( " + 
+			":display_info_id"
+			+ ",:product_id"
+			+ ",:reservation_email"
+			+ ",:reservation_name"
+			+ ",:reservation_tel"
+			+ ",:reservation_date"
+			+ ",0"
+			+ ",now()"
+			+ ",now()" + 
+			")";		
 }

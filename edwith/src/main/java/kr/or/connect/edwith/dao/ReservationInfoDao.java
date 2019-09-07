@@ -9,4 +9,5 @@ public interface ReservationInfoDao {
 	public List<ReservationInfo> selectAllByEmail(String reservationInfoEmail);
 	public int getTotalPriceById(Integer reservationInfoId);
 	public int countByEmail(String reservationInfoEmail);
+	public int insertReservationInfo(ReservationInfo reservationInfo);
 }

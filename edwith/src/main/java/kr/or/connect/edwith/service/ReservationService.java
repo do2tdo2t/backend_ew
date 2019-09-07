@@ -12,4 +12,5 @@ public interface ReservationService {
 	public List<ReservationUserCommentImage> getCommentImages(Integer commentId);
 	public List<ReservationInfo> getReservationInfos(String reservationInfoEmail);
 	public int getCountByEmail(String reservationInfoEmail);
+	public int putReservationInfo(ReservationInfo reservationInfo);
 }

@@ -1,14 +1,19 @@
 package kr.or.connect.edwith.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import kr.or.connect.edwith.argumentresolver.ReservationInfoArgumentResolver;
 
 @Configuration
 @EnableWebMvc
@@ -41,4 +46,14 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
         resolver.setSuffix(".jsp");
         return resolver;
     }
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		
+		super.addArgumentResolvers(argumentResolvers);
+		argumentResolvers.add(new ReservationInfoArgumentResolver());
+		
+	}
+    
+    
 }

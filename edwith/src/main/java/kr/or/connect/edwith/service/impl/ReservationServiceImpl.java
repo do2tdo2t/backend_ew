@@ -1,16 +1,21 @@
 package kr.or.connect.edwith.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.edwith.dao.DisplayInfoDao;
 import kr.or.connect.edwith.dao.ReservationInfoDao;
+import kr.or.connect.edwith.dao.ReservationInfoPriceDao;
 import kr.or.connect.edwith.dao.ReservationUserCommentDao;
 import kr.or.connect.edwith.dao.ReservationUserCommentImageDao;
 import kr.or.connect.edwith.dto.DisplayInfo;
 import kr.or.connect.edwith.dto.ReservationInfo;
+import kr.or.connect.edwith.dto.ReservationInfoPrice;
 import kr.or.connect.edwith.dto.ReservationUserComment;
 import kr.or.connect.edwith.dto.ReservationUserCommentImage;
 import kr.or.connect.edwith.service.ReservationService;
@@ -18,6 +23,8 @@ import kr.or.connect.edwith.service.ReservationService;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	ReservationUserCommentDao commentDao;
 	
@@ -26,6 +33,9 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
 	ReservationInfoDao reservationInfoDao;
+	
+	@Autowired
+	ReservationInfoPriceDao reservationInfoPriceDao;
 	
 	@Autowired
 	DisplayInfoDao displayInfoDao;
@@ -70,6 +80,27 @@ public class ReservationServiceImpl implements ReservationService {
 	public int getCountByEmail(String reservationInfoEmail) {
 		
 		return reservationInfoDao.countByEmail(reservationInfoEmail);
+	}
+
+	@Override
+	public int putReservationInfo(ReservationInfo reservationInfo) {
+		
+		int reservationInfoId = reservationInfoDao.insertReservationInfo(reservationInfo);
+		logger.debug("PHJ: Success put ReservationInfo : reservationInfoId : "+reservationInfoId);
+		List<ReservationInfoPrice> list = new ArrayList<ReservationInfoPrice>();
+		
+		for(ReservationInfoPrice price : reservationInfo.getPrices()) {
+			price.setReservationInfoId(reservationInfoId);
+			
+			
+			list.add(price);
+		}
+		logger.debug("PHJ: Set ReservationInfo : {} : "+ list.toString() );
+		
+		int[] result2 = reservationInfoPriceDao.insertPrices(list);
+		
+		logger.debug("PHJ: Success put {} ReservationInfoPrices",result2);
+		return 200;
 	}
 	
 }

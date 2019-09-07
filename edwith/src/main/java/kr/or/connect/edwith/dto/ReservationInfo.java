@@ -1,5 +1,7 @@
 package kr.or.connect.edwith.dto;
 
+import java.util.List;
+
 public class ReservationInfo {
 	private int reservationInfoId;
 	private int productId;
@@ -8,12 +10,16 @@ public class ReservationInfo {
 	private String reservationTelephone;
 	private String reservationEmail;
 
-	private int cancelYn;
-	private String reservationDate;
+	private int cancelYn=0;
+	private String reservationDate; //resevaitionYearMonthDay
+	private String reservationYearMonthDay;
 	private String createDate;
 	private String modifyDate;
 	DisplayInfo displayInfo;
 	private int totalPrice;
+	private List<ReservationInfoPrice> prices;
+	
+	
 	public int getReservationInfoId() {
 		return reservationInfoId;
 	}
@@ -87,13 +93,26 @@ public class ReservationInfo {
 		this.totalPrice = totalPrice;
 	}
 	
+	public List<ReservationInfoPrice> getPrices() {
+		return prices;
+	}
+	public void setPrices(List<ReservationInfoPrice> prices) {
+		this.prices = prices;
+	}
+	public String getReservationYearMonthDay() {
+		return reservationYearMonthDay;
+	}
+	public void setReservationYearMonthDay(String reservationYearMonthDay) {
+		this.reservationYearMonthDay = reservationYearMonthDay;
+	}
 	@Override
 	public String toString() {
 		return "ReservationInfo [reservationInfoId=" + reservationInfoId + ", productId=" + productId
 				+ ", displayInfoId=" + displayInfoId + ", reservationName=" + reservationName
 				+ ", reservationTelephone=" + reservationTelephone + ", reservationEmail=" + reservationEmail
-				+ ", cancelYn=" + cancelYn + ", reservationDate=" + reservationDate + ", createDate=" + createDate
-				+ ", modifyDate=" + modifyDate + ", displayInfo=" + displayInfo + ", totalPrice=" + totalPrice + "]";
+				+ ", cancelYn=" + cancelYn + ", reservationDate=" + reservationDate + ", reservationYearMonthDay="
+				+ reservationYearMonthDay + ", createDate=" + createDate + ", modifyDate=" + modifyDate
+				+ ", displayInfo=" + displayInfo + ", totalPrice=" + totalPrice + ", prices=" + prices + "]";
 	}
 	
 
