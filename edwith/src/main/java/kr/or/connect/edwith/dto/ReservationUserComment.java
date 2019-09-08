@@ -15,6 +15,7 @@ public class ReservationUserComment {
 	private String reservationName;
 	private String reservationTelephone;
 	private float score;
+	
 	public String getComment() {
 		return comment;
 	}

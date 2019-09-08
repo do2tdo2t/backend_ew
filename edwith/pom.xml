@@ -51,8 +51,18 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
-
+		
+		<!-- file upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
 		<!-- json 라이브러리 databind jackson-core, jackson-annotation에 의존성이 있음 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

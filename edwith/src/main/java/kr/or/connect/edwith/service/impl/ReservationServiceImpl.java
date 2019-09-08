@@ -102,5 +102,11 @@ public class ReservationServiceImpl implements ReservationService {
 		logger.debug("PHJ: Success put {} ReservationInfoPrices",result2);
 		return 200;
 	}
+
+	@Override
+	public int putReservationComment(int reservationInfoId, ReservationUserComment comment) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
