@@ -16,9 +16,12 @@
 <body>
 <body>
 	<div class="gnb-bar" style="width: 375px; height: 46px;">
-		<img src="${pageContext.request.contextPath}/img/reservation-icon.png"
-			alt="" class="gnb-img" style="margin:5px">
-		<button class="gnb-bnt" style="margin:5px" >비회원로그인</button>
+		 <a href="https://m.naver.com/" class="lnk_logo" title="네이버">
+		 <img src="${pageContext.request.contextPath}/img/favicon.ico"
+			alt="" class="gnb-img" style="margin:5px"></a>
+		<a href="./bookinglogin.html" class="btn_my">
+			<span class="gnb-bnt" style="margin:5px" >비회원로그인</span>
+		</a>
 	</div>
 	<div class="promotion-section"
 		style="width: 375px; height: 185px; overflow: hidden;">
@@ -54,7 +57,7 @@
 	<!-- footer 영역 -->
 	<div class="footer" style="width: 375px">
 		<div class="more" style="width: 370px; height: 25px; ">더보기</div>
-		<div class="move-top" style="width: 370px; height: 25px; ">↑top</div>
+		<div class="move-top" style="width: 370px; height: 25px; "><a href="#">↑top</a></div>
 	</div>
 	</div>
 	

@@ -9,7 +9,7 @@ var imgIdx = 0;
 function init(){
     sildeImg();
     ajaxProduct(1,1);
-    window.scrollTo(500, 0); 
+    
     var categoryItems = document.querySelectorAll(".category-item");
     
     categoryItems.forEach(function(item){
