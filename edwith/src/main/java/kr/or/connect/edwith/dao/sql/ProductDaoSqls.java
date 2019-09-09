@@ -37,7 +37,7 @@ public class ProductDaoSqls {
 			"	on table3.id = product_id ) as table2 " + 
 			"on table1.product_id = table2.product_id " +
 			"group by product_id " +
-			"order by product_id DESC limit 0, :limit;" ;
+			"order by product_id DESC limit :limit, 4;" ;
 
 		
 	public static final String COUNT_ALL = "select count(*) from product";

@@ -6,7 +6,7 @@ import kr.or.connect.edwith.dto.Product;
 
 public interface ProductDao {
 
-	List<Product> selectAll(Integer categoryId, Integer limit);
+	List<Product> selectAll(Integer categoryId,Integer start, Integer limit);
 
 	Integer getCountById(Integer categoryId);
 }

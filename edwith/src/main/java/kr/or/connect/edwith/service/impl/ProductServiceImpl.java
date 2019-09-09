@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	{
 		logger.debug("{}... getProducts()..",CLASS_NAME);
 		int limit = (start == 0 ? ONE_PAGE_COUNT : start * ONE_PAGE_COUNT);
-		List<Product> list = productDao.selectAll(categoryId,limit);
+		List<Product> list = productDao.selectAll(categoryId,start,limit);
 		
 		return list;
 	}
