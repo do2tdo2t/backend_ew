@@ -37,7 +37,11 @@ public class ProductDaoImpl implements ProductDao {
 		params.put("start",start);
 		params.put("limit",limit);
 		params.put("categoryId",categoryId);
-		return jdbc.query(SELECT_PRODUCT_ALL, params, rowMapper);
+		
+		if (categoryId == 0) {
+			return  jdbc.query(SELECT_PRODUCT_ALL, params, rowMapper);
+		}
+		return jdbc.query(SELECT_PRODUCT_ALL_BY_CATEGORY, params, rowMapper);
 		
 	}
 
@@ -47,7 +51,8 @@ public class ProductDaoImpl implements ProductDao {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("categoryId",categoryId);
 		
-		return jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
+		if(categoryId == 0) return jdbc.queryForObject(COUNT_ALL, params,Integer.class);
+		else return jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
 	}
 
 }

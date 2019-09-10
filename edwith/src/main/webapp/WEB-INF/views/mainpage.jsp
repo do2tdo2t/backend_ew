@@ -41,6 +41,8 @@
                             <div class="container_visual">
                                 <!-- 슬라이딩기능: 이미지 (type = 'th')를 순차적으로 노출 -->
                                 <ul class="visual_img">
+                                	
+                                
                                 </ul>
                             </div>
                             <span class="nxt_fix" style="display:none;"></span>
@@ -51,22 +53,22 @@
             <div class="section_event_tab">
                 <ul class="event_tab_lst tab_lst_min">
                     <li class="item" data-category="0">
-                        <a class="anchor active"> <span>전체리스트</span> </a>
+                        <a class="anchor active" data-category="1"> 전체리스트</a>
                     </li>
                     <li class="item" data-category="1">
-                        <a class="anchor"> <span>전시</span> </a>
+                        <a class="anchor" data-category="1"> 전시 </a>
                     </li>
                     <li class="item" data-category="2">
-                        <a class="anchor"> <span>뮤지컬</span> </a>
+                        <a class="anchor" data-category="2"> 뮤지컬 </a>
                     </li>
                     <li class="item" data-category="3">
-                        <a class="anchor"> <span>콘서트</span> </a>
+                        <a class="anchor" data-category="3"> 콘서트 </a>
                     </li>
                     <li class="item" data-category="4">
-                        <a class="anchor"> <span>클래식</span> </a>
+                        <a class="anchor" data-category="4"> 클래식</a>
                     </li>
                     <li class="item" data-category="5">
-                        <a class="anchor"> <span>연극</span> </a>
+                        <a class="anchor" data-category="5">연극</a>
                     </li>
                     <!-- li class="item" data-category="7">
                         <a class="anchor"> <span>클래스</span> </a>
@@ -79,6 +81,10 @@
                     </li -->
                 </ul>
             </div>
+            
+            <input type="hidden" id="cur_category" value="0" />
+            <input type="hidden" id="cur_page" value="1" />
+            
             <div class="section_event_lst">
                 <p class="event_lst_txt">바로 예매 가능한 행사가 <span class="pink point-text">10</span>개 있습니다</p>
                 <div class="wrap_event_box">
@@ -87,7 +93,7 @@
                     
                     <!-- 더보기 -->
                     <div class="more">
-                        <button class="btn more-item"><span>더보기</span></button>
+                        <button class="btn more-item" style="display:block"><span>더보기</span></button>
                     </div>
                 </div>
             </div>
@@ -105,7 +111,7 @@
 
 
     <script type="rv-template" id="promotionItem">
-    <li class="item" style="background-image: url(http://211.249.62.123/productImages/${productId}/${productImageId});">
+    <li class="item" style="background-image: url(${pageContext.request.contextPath}/{productImageUrl});">
         <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
             <div class="event_txt">
                 <h4 class="event_txt_tit"></h4>
@@ -118,14 +124,14 @@
 
     <script type="rv-template" id="itemList">
         <li class="item">
-            <a href="detail.html?id={id}" class="item_book">
+            <a href="detail.html?id={displayInfoId}" class="item_book">
                 <div class="item_preview">
-                    <img alt="{description}" class="img_thumb" src="${pageContext.request.contextPath}/{imgUrl}">
+                    <img alt="{productDescription}" class="img_thumb" src="${pageContext.request.contextPath}/{productImageUrl}">
                     <span class="img_border"></span>
                 </div>
                 <div class="event_txt">
-                    <h4 class="event_txt_tit"> <span>{description}</span> <small class="sm">{placeName}</small> </h4>
-                    <p class="event_txt_dsc">{content}</p>
+                    <h4 class="event_txt_tit"> <span>{productDescription}</span> <small class="sm">{placeName}</small> </h4>
+                    <p class="event_txt_dsc">{productContent}</p>
                 </div>
             </a>
         </li>
