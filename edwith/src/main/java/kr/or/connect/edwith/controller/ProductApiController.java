@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
 import kr.or.connect.edwith.dto.DisplayInfo;
@@ -54,7 +55,9 @@ public class ProductApiController {
 	}
 	
 	@GetMapping("/{displayInfoId}")
-	public Map<String,Object> item(@PathVariable(name="displayInfoId",required=true) int displayInfoId){
+	public ModelAndView item(@PathVariable(name="displayInfoId",required=true) int displayInfoId){
+		
+		ModelAndView mav = new ModelAndView();
 		Map<String,Object> map= new HashMap<String,Object>();
 		
 		DisplayInfo displayInfo = displayService.getDisplayInfoById(displayInfoId);
@@ -71,10 +74,13 @@ public class ProductApiController {
 		
 		map.put("displayInfo",displayInfo);
 		map.put("dispalyInfoImage",displayInfoImage);
-		map.put("productImage", productImage);
+		map.put("productImages", productImage);
 		map.put("productPrices",productPrices);
 		map.put("comments",comments);
 		map.put("averageScore", averageScore);
-		return map;
+		
+		mav.addAllObjects(map);
+		mav.setViewName("detail");
+		return mav;
 	}
 }

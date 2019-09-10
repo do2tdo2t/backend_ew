@@ -82,7 +82,6 @@ public class ProductDaoSqls {
 	
 	
 	public static final String SELECT_PRODUCT_IMAGE_BY_ID =
-			"" + 
 			"select" + 
 			" content_type" + 
 			" ,create_date" + 
@@ -108,12 +107,11 @@ public class ProductDaoSqls {
 			" ,price_type_name" + 
 			" ,product_id" + 
 			" ,id as product_price_id" + 
-			"from product_price" + 
-			"where product_id = :productId;";
+			" from product_price" + 
+			" where product_id = :productId;";
 	
 	public static final String GET_AVERAGE_SCORE =
-			"-- averageScore " + 
-			"select round(AVG(score),1) as averageScore" + 
-			"from reservation_user_comment" + 
-			"group by product_id having product_id = :productId;";
+			"select round(AVG(score),1) as averageScore " + 
+			"from reservation_user_comment " + 
+			"group by product_id having product_id = :productId";
 }

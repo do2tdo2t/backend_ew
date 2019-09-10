@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
+<c:set var="displayInfo" value="${displayInfo }"/>
 
 <head>
     <meta charset="utf-8">
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="/edwith/css/style.css" rel="stylesheet">
     <style>
         .container_visual {
             height: 414px;
@@ -21,8 +23,8 @@
         <div class="header fade">
             <header class="header_tit">
                 <h1 class="logo">
-                    <a href="./mainpage.html" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                    <a href="./mainpage.html" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                    <a href="/edwith" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+                    <a href="/edwith" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                 </h1>
                 <a href="#" class="btn_my"> <span title="예약확인">예약확인</span> </a>
             </header>
@@ -32,8 +34,8 @@
                 <div class="section_visual">
                     <header>
                         <h1 class="logo">
-                            <a href="./mainpage.html" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                            <a href="./mainpage.html" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                            <a href="/edwith" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+                            <a href="/edwith" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                         </h1>
                         <a href="./myreservation.html" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
                     </header>
@@ -48,38 +50,17 @@
                         <div>
                             <div class="container_visual" style="width: 414px;">
                                 <ul class="visual_img detail_swipe">
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
+                                	
+                                	<c:forEach var="item" items="${productImages }" >
+                                		<li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src="${item.saveFileName }"> <span class="img_bg"></span>
                                         <div class="visual_txt">
                                             <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
+                                                <h2 class="visual_txt_tit"> <span>${displayInfo.productDescription }</span> </h2>
+                                                <p class="visual_txt_dsc">${displayInfo.productContent }</p>
                                             </div>
                                         </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    	</li>
+                                	</c:forEach>
                                 </ul>
                             </div>
                             <div class="prev">
@@ -261,6 +242,7 @@
         </div>
     </footer>
     <div id="photoviwer"></div>
+
 </body>
 
 

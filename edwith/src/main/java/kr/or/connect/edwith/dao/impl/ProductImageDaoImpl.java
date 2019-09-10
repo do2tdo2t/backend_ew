@@ -12,6 +12,7 @@ import kr.or.connect.edwith.dto.ProductImage;
 import static kr.or.connect.edwith.dao.sql.ProductDaoSqls.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -26,11 +27,11 @@ public class ProductImageDaoImpl implements ProductImageDao {
 		
 	}
 	@Override
-	public ProductImage selectByProductId(Integer productId) {
+	public List<ProductImage> selectByProductId(Integer productId) {
 		
 		Map<String,?> params = Collections.singletonMap("productId", productId);
 		
-		return jdbc.queryForObject(SELECT_PRODUCT_IMAGE_BY_ID, params, rowMapper);
+		return jdbc.query(SELECT_PRODUCT_IMAGE_BY_ID, params, rowMapper);
 	}
 
 }
