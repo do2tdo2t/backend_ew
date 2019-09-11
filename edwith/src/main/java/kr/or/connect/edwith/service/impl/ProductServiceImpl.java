@@ -10,6 +10,7 @@ import ch.qos.logback.classic.Logger;
 import kr.or.connect.edwith.dao.ProductDao;
 import kr.or.connect.edwith.dao.ProductImageDao;
 import kr.or.connect.edwith.dao.ProductPriceDao;
+import kr.or.connect.edwith.dao.ReservationUserCommentDao;
 import kr.or.connect.edwith.dto.Product;
 import kr.or.connect.edwith.dto.ProductImage;
 import kr.or.connect.edwith.dto.ProductPrice;
@@ -29,6 +30,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductPriceDao productPriceDao;
 	
+	@Autowired
+	ReservationUserCommentDao reservationUserCommentDao;
+	
 	@Override
 	public List<Product> getProducts(Integer categoryId, Integer start) 
 	{
@@ -46,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductImage getProductImage(Integer productId) {
+	public List<ProductImage> getProductImage(Integer productId) {
 		
 		return productImageDao.selectByProductId(productId);
 	}
@@ -58,9 +62,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public float getAverageScore(Integer productId) {
-		
-		return productPriceDao.getAverageScore(productId);
+	public Float getAverageScore(Integer productId) {
+		int commentCnt = reservationUserCommentDao.getCountCommentsByProductId(productId);
+		if(commentCnt == 0) return new Float(0.0);
+		return productDao.getAverageScore(productId);
 	}
 
 }

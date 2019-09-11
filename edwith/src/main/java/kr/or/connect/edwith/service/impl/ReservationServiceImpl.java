@@ -42,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public List<ReservationUserComment> getComments(Integer productId) {
-		List<ReservationUserComment> comments = commentDao.selectAllByProductId(productId, COMMENT_COUNT);
+		List<ReservationUserComment> comments = commentDao.selectByProductId(productId, COMMENT_COUNT);
 		List<ReservationUserCommentImage> images = null;
 		for (ReservationUserComment comment : comments) {
 			images = getCommentImages(comment.getCommentId());
@@ -107,6 +107,21 @@ public class ReservationServiceImpl implements ReservationService {
 	public int putReservationComment(int reservationInfoId, ReservationUserComment comment) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<ReservationUserComment> getCommentsAll(Integer productId) {
+		
+		List<ReservationUserComment> comments = commentDao.selectAllByProductId(productId);
+		List<ReservationUserCommentImage> images = null;
+		for (ReservationUserComment comment : comments) {
+			images = getCommentImages(comment.getCommentId());
+			comment.setCommentImages(images);
+		}
+		
+		logger.debug("PHJ : getCommentsAll().. comments : "+comments.toString() );
+		
+		return comments;
 	}
 	
 }

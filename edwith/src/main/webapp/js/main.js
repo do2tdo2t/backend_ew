@@ -1,100 +1,238 @@
 /**
  * 
  */
+
 document.addEventListener("DOMContentLoaded",function(){
    init();
-})
+});
+
+
 var imgIdx = 0;
 
 function init(){
-    sildeImg();
-    ajaxProduct(1,1);
-    
-    var categoryItems = document.querySelectorAll(".category-item");
-    
-    categoryItems.forEach(function(item){
-    	item.addEventListener("click",function(evt){
-        	var categoryId = evt.target.value;
-        	console.log(evt.target.value);
-        	
-        	ajaxProduct(1,categoryId);
-        });
-    });
-    
-}
-
-function makeProductTemplate(jsonData){
-
-	//1. 개수 적용
-	var totalCnt = document.querySelector(".point-text");
-	totalCnt.innerText = jsonData.totalCnt;
+	var map ={}
 	
-	//2.
-	var products = jsonData.products;
-	var html = document.querySelector("#product-list-template").innerHTML;
-	var newHtml = "";
+    //sildeImg();
+	ajaxProduct(1,0,false);
+	
+	//category 
+	addClickEvent();
+ 
+	//promotion
+	ajaxPromotion();
+}
 
-	products.forEach(function(cur){
-		newHtml += html.replace("{productImageUrl}",cur.productImageUrl)
-		.replace("{productContent}",cur.productContent)
-		.replace("{productDescription}",cur.productDescription)
-		.replace("{productId}",cur.productId)
-		.replace("{displayInfoId}",cur.displayInfoId);
+function addClickEvent(){
+	   document.querySelectorAll(".anchor").forEach(function(item){
+	    	item.addEventListener("click",function(evt){
+	    		whenClickCategory(evt);
+	        });
+	    });
+	    
+	    document.querySelector(".more").addEventListener("click",function(evt){
+	    	whenClickMore(evt);
+	    });
+	   
+}
+
+/************************************************************************
+ * class
+ * html에서 {key} 부분을 해당 json 객체의 value로 replace 처리하여 반환
+ * */
+class Template{
+	addClass(element,className){
+		element.classList.add(className);
+	}
+	
+	wrap(tag,htmlString){
+		var wrapped = document.createElement(tag);
+		wrapped.innerHTML = htmlString;
+		return wrapped;
+	}
+	
+	insertChildHtml(parent,child){
+		parent.insertAdjacentHTML('beforeend',child);
+	}
+	
+	insertChildElement(parent,child){
+		parent.insertAdjacentElement('beforeend',child);
+	}
+	
+	replace(obj){
+		var result = this.html;
+		var keys = Object.keys(obj);
+		keys.forEach(function(key){
+			result = result.replace('{'+key+'}',product[key]);
+		});
+		return result;
+	}
+	
+	replaceAll(objs, html){
+		var list = [];
+		var result;
+		var keys;
+		objs.forEach(function(obj){
+			result = html;
+			keys = Object.keys(obj);
+			keys.forEach(function(key){
+				result = result.replace('{'+key+'}',obj[key]);
+			});
+			list.push(result);
+		});
+		return list;
+	}
+}
+/*
+ * URL Class
+ * */
+class URLUtil{
+	
+	appendParams(dict,url){
+		var isFirstParam = true;
+		for(var key in dict){
+			if(dict[key] == undefined) break;
+			if(dict[key] == "") break;
+			
+			if(isFirstParam){
+				url+="?";
+				isFirstParam = false;
+			}else{
+				url+="&";
+			}
+			url+=key+"="+dict[key];
+		}
+		return url;
+	}
+	
+}
+
+/****************************************************************
+************************* EventListener *************************/
+function whenClickCategory(evt){
+	
+	var categoryId = evt.target.dataset.category;
+	var anchors = document.querySelectorAll(".anchor");
+	
+	document.querySelector("#cur_category").value = categoryId;
+	document.querySelector("#cur_page").value = 1;
+	
+	//anchor active
+	anchors.forEach(function(a){
+		a.classList.remove('active');
 	});
-	var productTab = document.querySelector(".product-tab");
-	productTab.innerHTML = newHtml;
+	
+	evt.target.classList.add('active');
+	ajaxProduct(1,categoryId,false);
+}
+
+function whenClickMore(evt){
+	var cur_page = document.querySelector("#cur_page").value;
+	var cur_category = document.querySelector("#cur_category").value;
+	document.querySelector("#cur_page").value = ++cur_page;
+	ajaxProduct(cur_page,cur_category,false);
 }
 
 
+
+/************************** product 추가*********************************
+ **********************************************************************/
 function ajaxProduct(start, categoryId){
 	var url = "/edwith/api/products"
     var params = {}
     params["start"] = start;
 	params["categoryId"] = categoryId;
 	
-	var newUrl = appendParams(params , url);
+	var newUrl = new URLUtil().appendParams(params , url);
+	console.log("ajax event...." + newUrl);
+	
+	//ajax
     var oReq = new XMLHttpRequest();
-    
-    console.log("ajax event...." + newUrl);
     oReq.addEventListener("load",function(){
-    	console.log(oReq.responseText);
+    	
     	var jsonData = JSON.parse(oReq.responseText);
-    		makeProductTemplate(jsonData);
+    	addProduct(jsonData.products);
+    	totalCnt(jsonData.totalCnt);
+    	
+    	//button 설정 변경하기
+    	if(jsonData.products.length == jsonData.totalCnt ){
+    		document.querySelector('.more-item').style.display = "none";
+    	}else{
+    		document.querySelector('.more-item').style.display = "block";
+    	}
     });
     oReq.open("GET",newUrl);
     oReq.send();
-    
+}
+
+function totalCnt(totalCnt){
+	document.querySelector('.point-text').innerText = totalCnt;
 }
 
 
-//return newUrl
-function appendParams(dict,url){
+function addProduct(products){
+	var html = document.querySelector('#itemList').innerHTML;
+	var template = new Template();
+	var htmlList = template.replaceAll(products,html);
+	var ulList = [];
+	var ul;
+	var cnt = 0;
+	var more = document.querySelector('.more');
+	var box = document.querySelector(".wrap_event_box");
+	var len = products.length/2;
 
-	var isFirstParam = true;
-	for(var key in dict){
-		if(dict[key] == undefined) break;
-		if(dict[key] == "") break;
+	htmlList.forEach(function(item){
 		
-		if(isFirstParam){
-			url+="?";
-			isFirstParam = false;
+		if(cnt%len == 0){
+			ul = template.wrap('ul',item);
+			template.addClass(ul,'lst_event_box');
 		}else{
-			url+="&";
+			template.insertChildHtml(ul,item);
+			ulList.push(ul);
 		}
-		url+=key+"="+dict[key];
-	}
+		cnt++;
+	});
 	
-	return url;
+	box.innerHTML = "";
+	
+	ulList.forEach(function(item){
+		template.insertChildElement(box,item);
+	});
+	
+	template.insertChildElement(box,more);
+	
 }
 
-function sildeImg(){
-    var imgList =document.querySelectorAll(".promotion-img");
-    if(imgIdx >= imgList.length) imgIdx = 0;
-    
-    for(var i = 0 ,len = imgList.length; i < len ;i++){
-        imgList[i].style.display = "none";
-    }
-    imgList[imgIdx].style.display = "block";
-    imgIdx++;
-    setTimeout(sildeImg,2000);
+
+
+/**********************************************************************
+ * promotion 추가
+ **********************************************************************/
+function ajaxPromotion(){
+	var url = "/edwith/api/promotions";
+	var oReq = new XMLHttpRequest();
+	
+	oReq.addEventListener("load",function(){
+		var jsonData = JSON.parse(oReq.responseText);
+		var items = jsonData.items;
+		addPromotion(items);
+	});
+	
+    oReq.open("GET",url);
+    oReq.send();
+}
+
+function addPromotion(items){
+	var html = document.querySelector("#promotionItem").innerHTML;
+	
+	var template = new Template();
+	var list = template.replaceAll(items,html);
+	
+	html = '';
+	list.forEach(function(item){
+		html += item;
+	});
+	
+	console.log(html);
+	
+	document.querySelector('.visual_img').innerHTML = html;
 }

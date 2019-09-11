@@ -64,7 +64,7 @@ public class ProductApiController {
 		
 		DisplayInfoImage displayInfoImage = displayService.getDisplayInfoImageById(displayInfoId);
 		
-		ProductImage productImage = productService.getProductImage(displayInfo.getProductId());
+		List<ProductImage> productImages = productService.getProductImage(displayInfo.getProductId());
 		
 		List<ProductPrice> productPrices = productService.getProductPrices(displayInfo.getProductId());
 		
@@ -74,7 +74,7 @@ public class ProductApiController {
 		
 		map.put("displayInfo",displayInfo);
 		map.put("dispalyInfoImage",displayInfoImage);
-		map.put("productImages", productImage);
+		map.put("productImages", productImages);
 		map.put("productPrices",productPrices);
 		map.put("comments",comments);
 		map.put("averageScore", averageScore);
@@ -83,4 +83,5 @@ public class ProductApiController {
 		mav.setViewName("detail");
 		return mav;
 	}
+	
 }

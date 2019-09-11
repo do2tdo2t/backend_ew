@@ -1,6 +1,5 @@
 package kr.or.connect.edwith.dao.impl;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 	}
 	
 	@Override
-	public List<ReservationUserComment> selectAllByProductId(Integer productId, Integer limit) {
+	public List<ReservationUserComment> selectByProductId(Integer productId, Integer limit) {
 		
 		Map<String,Object> params = new HashMap<>();
 		params.put("productId", productId);
@@ -56,6 +55,21 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 	public int insertComment(ReservationUserComment comment) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
 		return insertAction.executeAndReturnKey(params).intValue();
+	}
+
+	@Override
+	public List<ReservationUserComment> selectAllByProductId(Integer productId) {
+		Map<String,Object> params = new HashMap<>();
+		params.put("productId", productId);
+		return jdbc.query(SELECT_COMMENTS_ALL_BY_ID, params, rowMapper );
+	}
+
+	@Override
+	public Integer getCountCommentsByProductId(Integer productId) {
+		Map<String,Object> params = new HashMap<>();
+		params.put("productId", productId);
+		
+		return jdbc.queryForObject(COUNT_COMMENTS_BY_PRODUCT_ID, params, Integer.class );
 	}
 
 }

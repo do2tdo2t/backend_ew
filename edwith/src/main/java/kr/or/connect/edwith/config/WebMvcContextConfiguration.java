@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import kr.or.connect.edwith.argumentresolver.ReservationInfoArgumentResolver;
 
 @Configuration
 @EnableWebMvc
@@ -51,7 +50,6 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		
 		super.addArgumentResolvers(argumentResolvers);
-		argumentResolvers.add(new ReservationInfoArgumentResolver());
 		
 	}
     

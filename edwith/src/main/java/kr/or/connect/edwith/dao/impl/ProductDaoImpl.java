@@ -2,6 +2,7 @@ package kr.or.connect.edwith.dao.impl;
 
 import static kr.or.connect.edwith.dao.sql.ProductDaoSqls.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,5 +55,14 @@ public class ProductDaoImpl implements ProductDao {
 		if(categoryId == 0) return jdbc.queryForObject(COUNT_ALL, params,Integer.class);
 		else return jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
 	}
+	
 
+	@Override
+	public Float getAverageScore(Integer productId) {
+		Map<String,?> params = Collections.singletonMap("productId", productId);
+		
+		//comment가 없으면 실행 하면 안되므로
+		
+		return jdbc.queryForObject(GET_AVERAGE_SCORE, params,Float.class);
+	}
 }

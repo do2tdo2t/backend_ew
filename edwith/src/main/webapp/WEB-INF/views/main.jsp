@@ -90,8 +90,6 @@
                 <p class="event_lst_txt">바로 예매 가능한 행사가 <span class="pink point-text">10</span>개 있습니다</p>
                 <div class="wrap_event_box">
                     <!-- [D] lst_event_box 가 2컬럼으로 좌우로 나뉨, 더보기를 클릭할때마다 좌우 ul에 li가 추가됨 -->
-                    
-                    
                     <!-- 더보기 -->
                     <div class="more">
                         <button class="btn more-item" style="display:block"><span>더보기</span></button>
@@ -125,9 +123,9 @@
 
     <script type="rv-template" id="itemList">
         <li class="item">
-            <a href="/edwith/detail?id={displayInfoId}" class="item_book">
+            <a href="/edwith/api/products/{displayInfoId}" class="item_book">
                 <div class="item_preview">
-                    <img alt="{productDescription}" class="img_thumb" src="${pageContext.request.contextPath}/{productImageUrl}">
+                    <img class="img_thumb" src="${pageContext.request.contextPath}/{productImageUrl}">
                     <span class="img_border"></span>
                 </div>
                 <div class="event_txt">
@@ -138,7 +136,7 @@
         </li>
     </script>
     
-    <script src="${pageContext.request.contextPath}/js/mainpage.js"></script>
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 
 </html>

@@ -1,15 +1,44 @@
 package kr.or.connect.edwith.dto;
 
 public class ProductImage {
-	private int id;
+	
+	private int productImageId;
+	private String contentType;
+	private String createDate;
+	private boolean deleteFlag;
+	private String fileInfoId;
 	private int productId;
+	private String saveFileName;
 	private String type;
-	private int fileId;
-	public int getId() {
-		return id;
+	public int getProductImageId() {
+		return productImageId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setProductImageId(int productImageId) {
+		this.productImageId = productImageId;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+	public boolean isDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+	public String getFileInfoId() {
+		return fileInfoId;
+	}
+	public void setFileInfoId(String fileInfoId) {
+		this.fileInfoId = fileInfoId;
 	}
 	public int getProductId() {
 		return productId;
@@ -17,32 +46,17 @@ public class ProductImage {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+	public String getSaveFileName() {
+		return saveFileName;
+	}
+	public void setSaveFileName(String saveFileName) {
+		this.saveFileName = saveFileName;
+	}
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public int getFileId() {
-		return fileId;
-	}
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
-	}
-	@Override
-	public String toString() {
-		return "ProductImage [id=" + id + ", productId=" + productId + ", type=" + type + ", fileId=" + fileId + "]";
-	}
-	
-	public ProductImage() {
-		
-	}
-	public ProductImage(int id, int productId, String type, int fileId) {
-		super();
-		this.id = id;
-		this.productId = productId;
-		this.type = type;
-		this.fileId = fileId;
 	}
 	
 }

@@ -38,7 +38,7 @@ public class ProductDaoSqls {
 			"	on table3.id = product_id ) as table2 " + 
 			"on table1.product_id = table2.product_id " +
 			"group by product_id " +
-			"order by product_id DESC limit 0, :limit;" ;
+			"order by product_id ASC limit 0, :limit;" ;
 	
 	public static final String SELECT_PRODUCT_ALL =
 			"select" + 
@@ -74,7 +74,7 @@ public class ProductDaoSqls {
 			"	on table3.id = product_id ) as table2 " + 
 			"on table1.product_id = table2.product_id " +
 			"group by product_id " +
-			"order by product_id DESC limit 0, :limit;" ;
+			"order by product_id ASC limit 0, :limit;" ;
 		
 	public static final String COUNT_ALL = "select count(*) from product";
 	public static final String COUNT_BY_CATEGORY_ID = 
@@ -95,7 +95,7 @@ public class ProductDaoSqls {
 			"from product_image " + 
 			"left join file_info " + 
 			"on file_info.id = product_image.file_id " + 
-			"where type='ma' " + 
+			"where (type='ma' or type='et') " + 
 			"and product_id = :productId";
 	
 	public static final String SELECT_PRODUCT_PRICE_ALL_BY_ID =
@@ -114,4 +114,6 @@ public class ProductDaoSqls {
 			"select round(AVG(score),1) as averageScore " + 
 			"from reservation_user_comment " + 
 			"group by product_id having product_id = :productId";
+	
+	
 }

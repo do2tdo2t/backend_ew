@@ -8,5 +8,6 @@ public interface ProductDao {
 
 	List<Product> selectAll(Integer categoryId,Integer start, Integer limit);
 
+	Float getAverageScore(Integer productId);
 	Integer getCountById(Integer categoryId);
 }

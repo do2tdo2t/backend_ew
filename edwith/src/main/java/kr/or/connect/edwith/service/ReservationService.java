@@ -9,6 +9,7 @@ import kr.or.connect.edwith.dto.ReservationUserCommentImage;
 public interface ReservationService {
 	public static final Integer COMMENT_COUNT = 3;
 	public List<ReservationUserComment> getComments(Integer productId);
+	public List<ReservationUserComment> getCommentsAll(Integer productId);
 	public List<ReservationUserCommentImage> getCommentImages(Integer commentId);
 	public List<ReservationInfo> getReservationInfos(String reservationInfoEmail);
 	public int getCountByEmail(String reservationInfoEmail);

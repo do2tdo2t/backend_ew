@@ -33,11 +33,5 @@ public class ProductPriceDaoImpl implements ProductPriceDao{
 		
 	}
 
-	@Override
-	public float getAverageScore(Integer productId) {
-		Map<String,?> params = Collections.singletonMap("productId", productId);
-		return jdbc.queryForObject(GET_AVERAGE_SCORE, params,Float.class);
-		
-	}
 
 }

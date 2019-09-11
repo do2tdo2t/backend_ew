@@ -62,6 +62,17 @@ public class ReservationApiController {
 		return result;
 	}
 	
+	@GetMapping("/{productId}")
+	public Map getCommentsAll(
+			@PathVariable(name="productId", required=true) int productId ) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ReservationUserComment> comments = reservationService.getCommentsAll(productId);
+		map.put("comments", comments);
+		
+		return map;
+	}
+	
 	public void fileUpload(MultipartFile file) {
 		try (FileOutputStream fos = new FileOutputStream("c:/tmp/" + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
@@ -74,5 +85,7 @@ public class ReservationApiController {
 			throw new RuntimeException("file Save" + " Error");
 		}
 	}
+	
+	
 
 }

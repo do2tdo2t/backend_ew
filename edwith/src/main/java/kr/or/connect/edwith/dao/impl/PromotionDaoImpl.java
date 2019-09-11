@@ -16,12 +16,14 @@ import static kr.or.connect.edwith.dao.sql.PromotionDaoSqls.*;
 @Repository
 public class PromotionDaoImpl implements PromotionDao {
 	private NamedParameterJdbcTemplate jdbc;
+	@SuppressWarnings("rawtypes")
 	private RowMapper rowMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
 	
 	public PromotionDaoImpl(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Promotion> selectAll() {
 		

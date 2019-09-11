@@ -1,8 +1,5 @@
 package kr.or.connect.edwith.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +10,9 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -61,7 +55,6 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 	@Override
 	public int insertReservationInfo(ReservationInfo reservationInfo) {
 		//SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
-		Map<String,Object> params = new HashMap<>();
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
 		paramSource.addValue("display_info_id", reservationInfo.getDisplayInfoId());
