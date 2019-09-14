@@ -156,3 +156,9 @@ function whenClickClose(){
 	document.querySelector("._close").style.display = "none";
 	document.querySelector("._open").style.display = "block";
 }
+
+function whenClickReserve(displayInfoId){
+	
+	
+	
+}

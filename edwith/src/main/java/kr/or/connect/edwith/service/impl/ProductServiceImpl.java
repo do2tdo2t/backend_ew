@@ -50,9 +50,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductImage> getProductImage(Integer productId) {
+	public List<ProductImage> getProductImages(Integer productId) {
 		
-		return productImageDao.selectByProductId(productId);
+		return productImageDao.selectAllByProductId(productId);
 	}
 
 	@Override
@@ -66,6 +66,12 @@ public class ProductServiceImpl implements ProductService {
 		int commentCnt = reservationUserCommentDao.getCountCommentsByProductId(productId);
 		if(commentCnt == 0) return new Float(0.0);
 		return productDao.getAverageScore(productId);
+	}
+
+	@Override
+	public ProductImage getProductImage(Integer productId) {
+		// TODO Auto-generated method stub
+		return productImageDao.selectByProductId(productId);
 	}
 
 }

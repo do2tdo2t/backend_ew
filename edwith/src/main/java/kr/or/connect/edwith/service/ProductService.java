@@ -10,7 +10,8 @@ public interface ProductService {
 	public static final Integer ONE_PAGE_COUNT = 4;
 	public int getCountById(Integer categoryId);
 	public List<Product> getProducts(Integer categoryId, Integer limit);
-	public List<ProductImage> getProductImage(Integer productId);
+	public List<ProductImage> getProductImages(Integer productId);
+	public ProductImage getProductImage(Integer productId);
 	public  List<ProductPrice> getProductPrices(Integer productId);
 	public Float getAverageScore(Integer productId);
 }

@@ -64,7 +64,7 @@ public class ProductApiController {
 		
 		DisplayInfoImage displayInfoImage = displayService.getDisplayInfoImageById(displayInfoId);
 		
-		List<ProductImage> productImages = productService.getProductImage(displayInfo.getProductId());
+		List<ProductImage> productImages = productService.getProductImages(displayInfo.getProductId());
 		
 		List<ProductPrice> productPrices = productService.getProductPrices(displayInfo.getProductId());
 		

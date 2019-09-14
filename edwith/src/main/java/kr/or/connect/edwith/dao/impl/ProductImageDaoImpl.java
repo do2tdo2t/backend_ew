@@ -27,11 +27,18 @@ public class ProductImageDaoImpl implements ProductImageDao {
 		
 	}
 	@Override
-	public List<ProductImage> selectByProductId(Integer productId) {
+	public List<ProductImage> selectAllByProductId(Integer productId) {
 		
 		Map<String,?> params = Collections.singletonMap("productId", productId);
 		
-		return jdbc.query(SELECT_PRODUCT_IMAGE_BY_ID, params, rowMapper);
+		return jdbc.query(SELECT_ALL_PRODUCT_IMAGE_BY_ID, params, rowMapper);
+	}
+	@Override
+	public ProductImage selectByProductId(Integer productId) {
+
+		Map<String,?> params = Collections.singletonMap("productId", productId);
+		
+		return jdbc.queryForObject(SELECT_PRODUCT_IMAGE_BY_ID, params, rowMapper);
 	}
 
 }

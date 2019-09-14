@@ -17,9 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.connect.edwith.dto.DisplayInfo;
+import kr.or.connect.edwith.dto.DisplayInfoImage;
+import kr.or.connect.edwith.dto.ProductImage;
+import kr.or.connect.edwith.dto.ProductPrice;
 import kr.or.connect.edwith.dto.ReservationInfo;
 import kr.or.connect.edwith.dto.ReservationUserComment;
+import kr.or.connect.edwith.service.DisplayService;
+import kr.or.connect.edwith.service.ProductService;
 import kr.or.connect.edwith.service.ReservationService;
 
 @RestController
@@ -30,7 +37,41 @@ public class ReservationApiController {
 
 	@Autowired
 	ReservationService reservationService;
-
+	
+	@Autowired
+	DisplayService displayService;
+	
+	@Autowired
+	ProductService productService;
+	
+	
+	@GetMapping("/reserve/{displayInfoId}")
+	public ModelAndView reservationPage(
+			@PathVariable(name="displayInfoId", required=true) Integer displayInfoId ) {
+		ModelAndView mav = new ModelAndView();
+		
+		
+		DisplayInfo displayInfo = displayService.getDisplayInfoById(displayInfoId);
+		DisplayInfoImage displayInfoImage = displayService.getDisplayInfoImageById(displayInfoId);
+		List<ProductPrice> productPrices = productService.getProductPrices(displayInfo.getProductId());
+		HashMap<String,ProductPrice> productPricesMap = new HashMap<String,ProductPrice>();
+		
+		for(ProductPrice price : productPrices) {
+			price.setRealPrice();
+			productPricesMap.put(price.getPriceTypeName(), price);
+			
+		}
+				
+		mav.addObject("displayInfo", displayInfo);
+		mav.addObject("displayInfoImage", displayInfoImage);
+		mav.addObject("productPricesMap",productPricesMap);
+		logger.debug("PHJ productPrices : {}",productPrices);
+		mav.setViewName("reserve");
+		
+		return mav;
+	}
+	
+	
 	@GetMapping
 	public Map<String, Object> getReservations(
 			@RequestParam(name = "reservationEmail", required = true) String reservationInfoEmail) {

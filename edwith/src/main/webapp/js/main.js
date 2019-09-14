@@ -6,9 +6,6 @@ document.addEventListener("DOMContentLoaded",function(){
    init();
 });
 
-
-var imgIdx = 0;
-
 function init(){
 	var map ={}
 	

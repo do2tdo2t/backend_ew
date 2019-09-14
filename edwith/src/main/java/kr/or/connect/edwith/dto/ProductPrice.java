@@ -8,6 +8,40 @@ public class ProductPrice {
 	private double discountRate;
 	private String createDate;
 	private String modifyDate;
+	private String realPrice;
+	private String discountRateStr;
+	
+	
+	public String getDiscountRateStr() {
+		return Integer.toString((int)(this.discountRate))+"%";
+		
+	}
+	public void setDiscountRateStr() {
+		this.discountRateStr = Integer.toString((int)(this.discountRate))+"%";
+		
+	}
+	
+	public void setRealPrice() {
+		this.realPrice = this.getRealPrice();
+	}
+	
+	public String getRealPrice() {
+		int realPrice =(int) Math.round(this.price * discountRate / 100);
+		char[] realPriceStr = Integer.toString(realPrice).toCharArray();
+		StringBuffer realPriceStrBuffer = new StringBuffer();
+		int cnt = 0;
+		for(int i = realPriceStr.length-1 ;  i >=0  ; i-- ) {
+			realPriceStrBuffer.append(realPriceStr[i]);
+			cnt++;
+			if(cnt %3 == 0 && cnt != realPriceStr.length+1) {
+				realPriceStrBuffer.append(",");
+			}
+		}
+		
+		return realPriceStrBuffer.reverse().toString();
+		
+	}
+	
 	public int getProductPriceId() {
 		return productPriceId;
 	}

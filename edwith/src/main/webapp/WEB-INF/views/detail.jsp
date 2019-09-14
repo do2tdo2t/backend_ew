@@ -40,7 +40,7 @@
                             <a href="/edwith" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
                             <a href="/edwith" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                         </h1>
-                        <a href="./myreservation.html" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
+                        <a href="/edwith/api/reservations/${displayInfo.displayInfoId }" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
                     </header>
                     <c:if test="${fn:length(productImages) >1 }">
 	                    <div class="pagination">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="section_btn"> <button type="button" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button> </div>
+                <div class="section_btn"><a href="/edwith/api/reservations/reserve/${displayInfo.displayInfoId}"> <button type="button" class="bk_btn"> <i class="fn fn-nbooking-calender2"></i> <span>예매하기</span> </button></a> </div>
                 <div class="section_review_list">
                 
                    

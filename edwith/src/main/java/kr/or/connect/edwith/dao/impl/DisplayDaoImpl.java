@@ -35,7 +35,12 @@ public class DisplayDaoImpl implements DisplayInfoDao {
 		Map<String,?> params = Collections.singletonMap("displayInfoId",displayInfoId);
 		
 		try {
-			return jdbc.queryForObject(SELECT_DISPLAY_INFO_BY_ID,params,rowMapper);
+			
+			DisplayInfo displayInfo=jdbc.queryForObject(SELECT_DISPLAY_INFO_BY_ID,params,rowMapper);
+			
+			displayInfo.setOpeningHours(displayInfo.getOpeningHours().replaceAll("-", "<br> -"));
+			
+			return displayInfo;
 		}catch(EmptyResultDataAccessException e) {
 			logger.error("조회된 데이터가 없습니다...");
 			return null;

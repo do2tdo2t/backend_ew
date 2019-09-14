@@ -81,7 +81,7 @@ public class ProductDaoSqls {
 			"select count(*) from product where category_id = :categoryId";
 	
 	
-	public static final String SELECT_PRODUCT_IMAGE_BY_ID =
+	public static final String SELECT_ALL_PRODUCT_IMAGE_BY_ID =
 			"select" + 
 			" content_type" + 
 			" ,create_date" + 
@@ -97,6 +97,15 @@ public class ProductDaoSqls {
 			"on file_info.id = product_image.file_id " + 
 			"where (type='ma' or type='et') " + 
 			"and product_id = :productId";
+	
+	public static final String SELECT_PRODUCT_IMAGE_BY_ID =
+			"select product_image.id as productImageId, file_info.save_file_name, product_id  " + 
+			"from product_image " + 
+			"inner join " + 
+			"file_info " + 
+			"on product_image.file_id = file_info.id " + 
+			"where type='th' " + 
+			"and product_id=:productId";
 	
 	public static final String SELECT_PRODUCT_PRICE_ALL_BY_ID =
 			"select" + 
