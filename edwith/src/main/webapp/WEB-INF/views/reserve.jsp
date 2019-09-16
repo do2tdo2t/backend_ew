@@ -9,6 +9,9 @@
 <c:set var="displayInfoImage" value="${displayInfoImage }"/>
 <c:set var="productImage" value="${productImage }"/>
 <c:set var="prices" value="${productPricesMap }"/>
+<fmt:parseDate value="${reservateDate }" var="date" pattern="yyyyMMdd"/>
+<fmt:formatDate value="${date }"  var="date" pattern="yyyy.MM.dd" />
+
 <head>
     <meta charset="utf-8">
     <meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
@@ -67,14 +70,14 @@
                		<div class="qty">
                             <div class="count_control">
                                 <div class="clearfix">
-                                    <a href="javascript:whenClickMinus('${price.key }', ${price.value.price * price.value.discountRate /100 } )" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> 
+                                    <a href="javascript:whenClickMinus('${price.key }',${price.value.price } )" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> 
                                     <input type="tel" class="count_control_input" value="0" readonly title="수량" id="${price.key }_qty" >
-                                    <a href="javascript:whenClickPlus('${price.key }',  ${price.value.price * price.value.discountRate /100 } )"  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
+                                    <a href="javascript:whenClickPlus('${price.key }',${price.value.price })"  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                     </a>
                                 </div>
                                 <div class="individual_price on_color"><span class="total_price" id="${price.key }_total_price">0</span><span class="price_type">원</span></div>
                             </div>
-                            <div class="qty_info_icon"> <strong class."product_amount"> <span>
+                            <div class="qty_info_icon"> <strong class="product_amount"> <span>
                             <c:choose>
                             	<c:when test="${price.value.priceTypeName == 'A' }">성인</c:when>
                             	<c:when test="${price.value.priceTypeName == 'Y' }">청소년</c:when>
@@ -82,7 +85,7 @@
                             </c:choose> 
                             </span> </strong> 
                             <strong class="product_price"> <span class="price">${price.value.price }</span> <span class="price_type">원</span> </strong> 
-                            <em class="product_dsc"><c:out value="${price.value.realPrice }"/> 원 (${price.value.discountRateStr } 할인가)</em> </div>
+                            <em class="product_dsc"><c:out value="${price.value.priceStr }"/> 원 (${price.value.discountRateStr } 할인가)</em> </div>
                         </div>
                  </c:forEach>
                 </div>
@@ -93,29 +96,43 @@
                         <div class="form_wrap">
                             <h3 class="out_tit">예매자 정보</h3>
                             <div class="agreement_nessasary help_txt"> <span class="spr_book ico_nessasary"></span> <span>필수입력</span> </div>
-                            <form class="form_horizontal">
+                            
+                            <!-- 예매하기 form -->
+                            <form class="form_horizontal" id="reservateForm" accept-charset="UTF-8" >
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
-                                    <div class="inline_control"> <input type="text" name="name" id="name" class="text" placeholder="네이버" maxlength="17"> </div>
+                                    <div class="inline_control"> <input type="text" name="reservationName" id="name" class="text" placeholder="홍길동" onfocusout="checkName();" maxlength="17"></div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="tel"> <span class="spr_book ico_nessasary">필수</span> <span>연락처</span> </label>
                                     <div class="inline_control tel_wrap">
-                                        <input type="tel" name="tel" id="tel" class="tel" value="" placeholder="휴대폰 입력 시 예매내역 문자발송">
+                                        <input type="tel" name="reservationTelephone" id="tel" class="tel" value="" onfocusout="checkTel();" placeholder="휴대폰 입력 시 예매내역 문자발송">
                                         <div class="warning_msg">형식이 틀렸거나 너무 짧아요</div>
                                     </div>
                                 </div>
-                                <div class="inline_form"> <label class="label" for="email">  <span class="spr_book ico_nessasary">필수</span>  <span>이메일</span> </label>
-                                    <div class="inline_control"> <input type="email" name="email" id="email" class="email" value="" placeholder="crong@codesquad.kr" maxlength="50"> </div>
+                                <div class="inline_form"> <label class="label" for="email">  <span class="spr_book ico_nessasary" >필수</span> <span>이메일</span> </label>
+                                    <div class="inline_control"> <input type="email" name="reservationEmail" id="email" class="email" value="" onfocusout="checkEmail();" placeholder="crong@codesquad.kr" maxlength="50"> </div>
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">
-                                        <p class="inline_txt selected">2017.2.17, 총 <span id="totalCount">16</span>매</p>
+                                        <p class="inline_txt selected">${date }, 총 <span id="totalCount">0</span>매</p>
                                     </div>
                                 </div>
+                                
+                                <input type="hidden" name="reservationDate" value="${reservateDate }" />
+                                <input type="hidden" name="reservationYearMonthDay" value="${reservateDate }" />
+                                
+                                <input type="hidden" name="prices" id="A_hidden_price" value="0"/> <!-- 어른 -->
+                                <input type="hidden" name="prices" id="B_hidden_price" value="0"/> <!-- 유아 -->
+                                <input type="hidden" name="prices" id="Y_hidden_price"  value="0"/> <!-- 청소년 -->
+                                <input type="hidden" name="totalPrice" id="total_price" value="0" />
+                                
+                                <input type="hidden" name="productId" value="${displayInfo.productId }" />
+                                <input type="hidden" name="displayInfoId" value="${displayInfo.displayInfoId }" />
+
                             </form>
                         </div>
                     </div>
                     <div class="section_booking_agreement">
-                        <div class="agreement all"> <input type="checkbox" id="chk3" class="chk_agree"> <label for="chk3" class="label chk_txt_label"> <span>이용자 약관 전체동의</span> </label>
+                        <div class="agreement all"> <input type="checkbox" id="chk3" class="chk_agree" onclick="whenClickAgreement();"> <label for="chk3" class="label chk_txt_label"> <span>이용자 약관 전체동의</span> </label>
                             <div class="agreement_nessasary">
                                 <span>필수동의</span> </div>
                         </div>
@@ -137,7 +154,7 @@
                 </div>
                 <div class="box_bk_btn">
                     <!-- [D] 약관 전체 동의가 되면 disable 제거 -->
-                    <div class="bk_btn_wrap disable"> <button type="button" class="bk_btn"> <i class="spr_book ico_naver_s"></i>  <span>예약하기</span> </button> </div>
+                    <div class="bk_btn_wrap disable"> <button type="button" class="bk_btn" id="submitBtn" onclick="submit()"> <i class="spr_book ico_naver_s"></i>  <span>예약하기</span> </button> </div>
                 </div>
             </div>
         </div>
@@ -151,37 +168,9 @@
             <span class="copyright">© NAVER Corp.</span>
         </div>
     </footer>
-    <script>
-
-    function whenClickPlus(priceType,price){
-    	var qty = document.querySelector("#"+priceType+"_qty");
-    	var total_price = document.querySelector("#"+priceType+"_total_price");
-    	console.log(price);
-    	qty.value = parseInt(qty.value)+1;
-    	total_price.innerText = parseInt( total_price.innerText ) + parseInt(price);
-    
-    }
-
-    function whenClickMinus(priceType,price){
-    	var qty = document.querySelector("#"+priceType+"_qty");
-    	var total_price = document.querySelector("#"+priceType+"_total_price");
-    	if(qty.value != 0){
-   	 		qty.value = parseInt(qty.value)-1 ;
-    		total_price.innerText = parseInt( total_price.innerText ) - parseInt(price);
-    	}
-    }	
-    function whenClickShowAgreement(num){
-    	var agreement = document.querySelectorAll(".agreement")[parseInt(num)];
-    	
-    	if(agreement.classList.contains("open"))
-    		agreement.classList.remove("open");
-    	else
-    		agreement.classList.add("open");
-    }
-    
-    
-    </script>
-	<sript src="${pageContext.request.contextPath}/js/reserve.js"></sript>
+  
+	<script src="${pageContext.request.contextPath}/js/reserve.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
 </body>
 
 </html>

@@ -2,9 +2,16 @@ package kr.or.connect.edwith.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.connect.edwith.dto.DisplayInfo;
 import kr.or.connect.edwith.dto.DisplayInfoImage;
-import kr.or.connect.edwith.dto.ProductImage;
 import kr.or.connect.edwith.dto.ProductPrice;
 import kr.or.connect.edwith.dto.ReservationInfo;
 import kr.or.connect.edwith.dto.ReservationUserComment;
@@ -50,22 +56,31 @@ public class ReservationApiController {
 			@PathVariable(name="displayInfoId", required=true) Integer displayInfoId ) {
 		ModelAndView mav = new ModelAndView();
 		
-		
 		DisplayInfo displayInfo = displayService.getDisplayInfoById(displayInfoId);
 		DisplayInfoImage displayInfoImage = displayService.getDisplayInfoImageById(displayInfoId);
 		List<ProductPrice> productPrices = productService.getProductPrices(displayInfo.getProductId());
 		HashMap<String,ProductPrice> productPricesMap = new HashMap<String,ProductPrice>();
 		
+		//priceTypeName을 키로하는 Map 생성
 		for(ProductPrice price : productPrices) {
-			price.setRealPrice();
 			productPricesMap.put(price.getPriceTypeName(), price);
-			
 		}
-				
+		
+		/*reservateDate 규칙에 따라 생성
+		 * 예매내용내의 예매일은 웹프론트엔드에서 사용자가 선택하거나 입력해서 얻어지는 정보가 아니고, 서버에서 다음의 규칙으로 생성해서 내려준다.  
+		 * (예매일생성 규칙 : 예매일 기준  오늘포함해서 1-5일 랜덤값으로 서버에서 생성해서 내려줌) yyyymmdd
+		 * */
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd",Locale.KOREA );
+		Calendar cal = new GregorianCalendar(Locale.KOREA); 
+		Date today = new Date();
+		cal.setTime(today);
+		cal.add(Calendar.DAY_OF_YEAR, (int)((Math.random()*5 ) +1 ));
+		String reservateDate = sdf.format(cal.getTime());
+		
 		mav.addObject("displayInfo", displayInfo);
 		mav.addObject("displayInfoImage", displayInfoImage);
 		mav.addObject("productPricesMap",productPricesMap);
-		logger.debug("PHJ productPrices : {}",productPrices);
+		mav.addObject("reservateDate", reservateDate);
 		mav.setViewName("reserve");
 		
 		return mav;
@@ -85,11 +100,16 @@ public class ReservationApiController {
 
 		return map;
 	}
-
+	//@RequestBody ReservationInfo reservationInfo
 	@PostMapping
-	public Integer putReservation(@RequestBody ReservationInfo reservationInfo) {
+	public Integer putReservation(HttpServletRequest request, @RequestBody ReservationInfo reservationInfo) {
+		logger.info("POST /api/reservations..");
 		logger.info("POST /api/reservations.. Params: {}", reservationInfo.toString());
-		int result = reservationService.putReservationInfo(reservationInfo);
+		
+		//int result = reservationService.putReservationInfo(reservationInfo);
+		
+		
+		int result = 0;
 		return result;
 	}
 

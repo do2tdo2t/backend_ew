@@ -8,7 +8,7 @@ public class ProductPrice {
 	private double discountRate;
 	private String createDate;
 	private String modifyDate;
-	private String realPrice;
+	private String priceStr;
 	private String discountRateStr;
 	
 	
@@ -16,30 +16,30 @@ public class ProductPrice {
 		return Integer.toString((int)(this.discountRate))+"%";
 		
 	}
+	
+	
 	public void setDiscountRateStr() {
-		this.discountRateStr = Integer.toString((int)(this.discountRate))+"%";
-		
+		this.discountRateStr = Integer.toString((int)(this.discountRate))+"%";	
 	}
 	
-	public void setRealPrice() {
-		this.realPrice = this.getRealPrice();
+	public void setPriceStr() {
+		this.priceStr = getPriceStr();
 	}
 	
-	public String getRealPrice() {
-		int realPrice =(int) Math.round(this.price * discountRate / 100);
-		char[] realPriceStr = Integer.toString(realPrice).toCharArray();
+	
+	public String getPriceStr() {
+		char[] priceStr = Integer.toString(this.price).toCharArray();
 		StringBuffer realPriceStrBuffer = new StringBuffer();
 		int cnt = 0;
-		for(int i = realPriceStr.length-1 ;  i >=0  ; i-- ) {
-			realPriceStrBuffer.append(realPriceStr[i]);
+		for(int i = priceStr.length-1 ;  i >=0  ; i-- ) {
+			realPriceStrBuffer.append(priceStr[i]);
 			cnt++;
-			if(cnt %3 == 0 && cnt != realPriceStr.length+1) {
+			if(cnt %3 == 0 && cnt != priceStr.length+1) {
 				realPriceStrBuffer.append(",");
 			}
 		}
 		
 		return realPriceStrBuffer.reverse().toString();
-		
 	}
 	
 	public int getProductPriceId() {
@@ -83,13 +83,6 @@ public class ProductPrice {
 	}
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
-	}
-	
-	@Override
-	public String toString() {
-		return "ProductPrice [productPriceId=" + productPriceId + ", productId=" + productId + ", priceTypeName="
-				+ priceTypeName + ", price=" + price + ", discountRate=" + discountRate + ", createDate=" + createDate
-				+ ", modifyDate=" + modifyDate + "]";
 	}
 	
 	
