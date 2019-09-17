@@ -81,6 +81,8 @@ public class ProductApiController {
 		
 		mav.addAllObjects(map);
 		mav.setViewName("detail");
+		
+		
 		return mav;
 	}
 	

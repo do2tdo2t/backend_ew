@@ -15,4 +15,5 @@ public interface ReservationService {
 	public int getCountByEmail(String reservationInfoEmail);
 	public int putReservationInfo(ReservationInfo reservationInfo);
 	public int putReservationComment(int reservationInfoId, ReservationUserComment comment);
+	public boolean checkReservations(ReservationInfo reservationInfo);
 }

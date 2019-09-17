@@ -75,4 +75,23 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 		return holder.getKey().intValue();
 	}
 
+	@Override
+	public Boolean selectReservationInfoByEmail(ReservationInfo reservationInfo) {
+		Map<String,?> params = Collections.singletonMap("reservationInfoEmail", reservationInfo.getReservationEmail());
+		
+		int i = jdbc.queryForObject(COUNT_RESERVATION_INFO_BY_EMAIL, params, Integer.class);
+		if(i < 1) return false;
+		
+		ReservationInfo mReservationInfo = jdbc.queryForObject(SELECT_RESERVATION_INFO_BY_EMAIL_FOR_CHECKING,params, rowMapper);
+	
+		reservationInfo.setReservationName(mReservationInfo.getReservationName());
+		reservationInfo.setReservationTelephone(mReservationInfo.getReservationTelephone());
+		
+		logger.debug("PHJ... login.. reservationInfo : {}",reservationInfo.toString());
+		
+		if(reservationInfo == null) return false;
+		else return true;
+	
+	}
+
 }

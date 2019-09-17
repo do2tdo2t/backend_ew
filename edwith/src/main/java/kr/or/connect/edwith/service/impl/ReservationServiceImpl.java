@@ -123,5 +123,13 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return comments;
 	}
+
+	@Override
+	public boolean checkReservations(ReservationInfo reservationInfo) {
+		
+		return reservationInfoDao.selectReservationInfoByEmail(reservationInfo);
+		//if(cnt > 1) return true;
+		//return false;
+	}
 	
 }

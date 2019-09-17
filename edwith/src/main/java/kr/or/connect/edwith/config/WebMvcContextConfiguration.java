@@ -8,10 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import kr.or.connect.edwith.interceptor.LogInterceptor;
+import kr.or.connect.edwith.interceptor.LoginInterceptor;
 
 
 @Configuration
@@ -51,6 +55,13 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 		
 		super.addArgumentResolvers(argumentResolvers);
 		
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LogInterceptor());
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/edwith/api/reservations/mypage");
+	
 	}
     
     

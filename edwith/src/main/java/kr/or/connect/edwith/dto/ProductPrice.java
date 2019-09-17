@@ -84,6 +84,14 @@ public class ProductPrice {
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductPrice [productPriceId=" + productPriceId + ", productId=" + productId + ", priceTypeName="
+				+ priceTypeName + ", price=" + price + ", discountRate=" + discountRate + ", createDate=" + createDate
+				+ ", modifyDate=" + modifyDate + ", priceStr=" + priceStr + ", discountRateStr=" + discountRateStr
+				+ "]";
+	}
 	
 	
 }

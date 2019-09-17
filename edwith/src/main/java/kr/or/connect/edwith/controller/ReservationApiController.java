@@ -51,7 +51,7 @@ public class ReservationApiController {
 	ProductService productService;
 	
 	
-	@GetMapping("/reserve/{displayInfoId}")
+	@GetMapping("/{displayInfoId}/buy")
 	public ModelAndView reservationPage(
 			@PathVariable(name="displayInfoId", required=true) Integer displayInfoId ) {
 		ModelAndView mav = new ModelAndView();
@@ -63,6 +63,7 @@ public class ReservationApiController {
 		
 		//priceTypeName을 키로하는 Map 생성
 		for(ProductPrice price : productPrices) {
+			logger.info("PHJ: {}",price);
 			productPricesMap.put(price.getPriceTypeName(), price);
 		}
 		
@@ -81,11 +82,18 @@ public class ReservationApiController {
 		mav.addObject("displayInfoImage", displayInfoImage);
 		mav.addObject("productPricesMap",productPricesMap);
 		mav.addObject("reservateDate", reservateDate);
-		mav.setViewName("reserve");
+		mav.setViewName("buy");
 		
 		return mav;
 	}
 	
+	@GetMapping("/mypage")
+	public ModelAndView page() {
+		logger.debug("PHJ... request page()");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("myreservation");
+		return mav;
+	}
 	
 	@GetMapping
 	public Map<String, Object> getReservations(
@@ -100,16 +108,14 @@ public class ReservationApiController {
 
 		return map;
 	}
-	//@RequestBody ReservationInfo reservationInfo
+	
 	@PostMapping
 	public Integer putReservation(HttpServletRequest request, @RequestBody ReservationInfo reservationInfo) {
 		logger.info("POST /api/reservations..");
 		logger.info("POST /api/reservations.. Params: {}", reservationInfo.toString());
 		
-		//int result = reservationService.putReservationInfo(reservationInfo);
+		int result = reservationService.putReservationInfo(reservationInfo);
 		
-		
-		int result = 0;
 		return result;
 	}
 

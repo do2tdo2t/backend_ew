@@ -10,4 +10,5 @@ public interface ReservationInfoDao {
 	public int getTotalPriceById(Integer reservationInfoId);
 	public int countByEmail(String reservationInfoEmail);
 	public int insertReservationInfo(ReservationInfo reservationInfo);
+	public Boolean selectReservationInfoByEmail(ReservationInfo reservationInfo);
 }

@@ -117,16 +117,15 @@
                                     </div>
                                 </div>
                                 
-                                <input type="hidden" name="reservationDate" value="${reservateDate }" />
-                                <input type="hidden" name="reservationYearMonthDay" value="${reservateDate }" />
+                                <input type="hidden" name="reservationDate" id="reservateDate" value="${reservateDate }" />
+                              
+                                <c:forEach items="${productPricesMap }" var="productPrice">
+                                	<input type="hidden" name="${productPrice.key }" class="productPriceId" value="${productPrice.value.productPriceId}"/> <!-- 어른 -->
+                                </c:forEach>
                                 
-                                <input type="hidden" name="prices" id="A_hidden_price" value="0"/> <!-- 어른 -->
-                                <input type="hidden" name="prices" id="B_hidden_price" value="0"/> <!-- 유아 -->
-                                <input type="hidden" name="prices" id="Y_hidden_price"  value="0"/> <!-- 청소년 -->
                                 <input type="hidden" name="totalPrice" id="total_price" value="0" />
-                                
-                                <input type="hidden" name="productId" value="${displayInfo.productId }" />
-                                <input type="hidden" name="displayInfoId" value="${displayInfo.displayInfoId }" />
+                                <input type="hidden" name="productId" id="productId" value="${displayInfo.productId }" />
+                                <input type="hidden" name="displayInfoId" id="displayInfoId" value="${displayInfo.displayInfoId }" />
 
                             </form>
                         </div>
@@ -154,14 +153,14 @@
                 </div>
                 <div class="box_bk_btn">
                     <!-- [D] 약관 전체 동의가 되면 disable 제거 -->
-                    <div class="bk_btn_wrap disable"> <button type="button" class="bk_btn" id="submitBtn" onclick="submit()"> <i class="spr_book ico_naver_s"></i>  <span>예약하기</span> </button> </div>
+                    <div class="bk_btn_wrap disable"> <button type="button" class="bk_btn" id="submitBtn" onclick="submit() ;"> <i class="spr_book ico_naver_s"></i>  <span>예약하기</span> </button> </div>
                 </div>
             </div>
         </div>
     </div>
     <footer>
         <div class="gototop">
-            <a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
+            <a href="javascript:submit()" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
         </div>
         <div id="footer" class="footer">
             <p class="dsc_footer">네이버(주)는 통신판매의 당사자가 아니며, 상품의정보, 거래조건, 이용 및 환불 등과 관련한 의무와 책임은 각 회원에게 있습니다.</p>
@@ -169,8 +168,9 @@
         </div>
     </footer>
   
-	<script src="${pageContext.request.contextPath}/js/reserve.js"></script>
+	<script src="${pageContext.request.contextPath}/js/buy.js"></script>
 	<script src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
+	
 </body>
 
 </html>

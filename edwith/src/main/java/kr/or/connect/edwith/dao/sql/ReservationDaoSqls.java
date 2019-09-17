@@ -122,5 +122,14 @@ public class ReservationDaoSqls {
 			+ ",0"
 			+ ",now()"
 			+ ",now()" + 
-			")";		
+			")";
+	
+	public static final String SELECT_RESERVATION_INFO_BY_EMAIL_FOR_CHECKING =
+			"select  " + 
+			" reservation_email " + 
+			" , reservation_name " + 
+			" ,reservation_tel as reservation_telephone  " + 
+			"from reservation_info " + 
+			"group by reservation_email, reservation_name,reservation_tel " + 
+			"having reservation_email=:reservationInfoEmail";
 }

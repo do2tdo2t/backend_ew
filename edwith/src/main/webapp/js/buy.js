@@ -28,6 +28,28 @@ function initForm(){
 }
 
 
+class ReservationParam{
+	constructor(displayInfoId,prices, productId, reservationEmail, reservationName, reservationTelephone,reservationYearMonthDay){
+		this.displayInfoId = displayInfoId;
+		this.prices = prices;
+		this.productId = productId;
+		this.reservationEmail = reservationEmail;
+		this.reservationName = reservationName;
+		this.reservationTelephone = reservationTelephone;
+		this.reservationDate = reservationYearMonthDay;
+		this.reservationYearMonthDay = reservationYearMonthDay;
+	}	
+}
+
+class ProductPrice{
+	constructor(count,productPriceId){
+		this.count = count;
+		this.productPriceId = productPriceId;
+	}
+}
+
+
+//===========Event==================
 function whenClickPlus(priceType, price){
 	var qty = document.querySelector("#"+priceType+"_qty");
 	var total_price = document.querySelector("#"+priceType+"_total_price");
@@ -90,58 +112,43 @@ function submit(){
 	if(!check()) return false;
 	
 	ajax();
-	
+}
+
+function getParamStr(){
+	var prices = [];
+	var productPrices = document.querySelectorAll(".productPriceId");
+	productPrices.forEach(function(item){
+		var id = item.value;
+		var count = document.querySelector( "#"+item.name+"_qty" ).value;
+		prices.push(new ProductPrice(count,id));
+	});
+	var did = document.querySelector("#displayInfoId").value;
+	var pid = document.querySelector("#productId").value;
+	var date = document.querySelector("#reservateDate").value;
+	var tel = document.querySelector("#tel").value;
+	var email = document.querySelector("#email").value;
+	var name = document.querySelector("#name").value;
+
+	var reservationParam = new ReservationParam(did,prices, pid, email, name, tel ,date);
+	return JSON.stringify(reservationParam);
 }
 
 function ajax(){
-	var queryString = $("#reservateForm").serialize();
-	var childs = $("#reservateForm > input");
-	var form = document.querySelector("#reservateForm");
-	var childs = form.getElementsByTagName("input");
-	console.log(childs);
-	for(var i = 0, len = childs.length ; i < len  ; i++){
-		console.log(childs[i] );
-	}
-	
-	/*
+	var params = getParamStr();
+
 	$.ajax({
 		type : 'post',
 		url : '/edwith/api/reservations',
-		data : queryString,
+		data : params,
 		contentType :"application/json;charset=UTF-8",
 		dataType : 'json',
 		error: function(error){
 			console.log(error);
 		},
 		success :function(json){
-			alert(json);
+			alert("예약이 완료 되었습니다.");
+			//로그인 처리
 		}
-	});
-	*/
-}
-
-/*
- * reservationName=parknan&
- * reservationTelephone=01099992222&
- * reservationEmail=crong%40connect.com&
- * reservationDate=20190921&
- * reservationYearMonthDay=20190921&
- * prices=12000&
- * prices=0&
- * prices=0&
- * totalPrice=12000&
- * productId=1&
- * displayInfoId=1
- * */
-
-function serializeToJson(data){
-	params = data.split("&");
-	jsonStr = "";
-	params.forEach(function(item){
-		key = "\""+ item.split("=")[0] + "\"";
-		value = "\""+ item.split("=")[1] + "\"";
-		jsonStr += key + ":" + value;
-		
 	});
 	
 }
@@ -156,7 +163,6 @@ function check(){
 		return false;
 	}
 	
-	
 	if(!chk){
 		alert("동의 버튼을 눌러주세요.");
 		return false;
@@ -166,6 +172,7 @@ function check(){
 		alert("입력한 성함을 확인해주세요.");
 		return false;
 	}
+	
 	if(!checkTel()){
 		alert("입력한 전화번호를 확인해주세요.");
 		return false;
@@ -178,7 +185,6 @@ function check(){
 	
 	fillHiddenfield();
 	return true;
-	
 }
 
 function fillHiddenfield(){
@@ -186,34 +192,26 @@ function fillHiddenfield(){
 	var Y_price = document.querySelector("#Y_total_price").innerText; //청소년
 	var B_price = document.querySelector("#B_total_price").innerText; //유아
 	
-		
-	document.querySelector("#A_hidden_price").value = A_price;
-	document.querySelector("#Y_hidden_price").value = Y_price;
-	document.querySelector("#B_hidden_price").value = B_price;
-	
 	document.querySelector("#total_price").value = parseInt(A_price) + parseInt(B_price)+ parseInt(Y_price);
-	
+
 }
 
-function checkTel(){
-	var telexp = /^01[0|1|6|7|8|9]{1}[0-9]{7,8}$/;
-	
-	var rtel = document.querySelector("#tel").value.replace(/ /g,"").replace(/-/g,"");
-	
-	console.log(rtel);
-	if(rtel == null || rtel == ""){
-		return false;
-	}
-	
-	if(telexp.test(rtel) == true){
-		document.querySelector("#tel").value = rtel;
-		return true;
-	}
 
-	return false;
-	 
+//000-0000-0000 format으로 변경
+function changeTelFormat(tel){
+	var list = [];
+	if (rtel.length == 7)
+		mid = 3;
+	else mid = 4;
+	
+	list.push(tel.substring(0,3));
+	list.push(tel.substring(3,mid));
+	list.push(tel.substring((3+mid),4));
+	tel = list.join('-');
+	return tel;
 }
 
+//======================= 유효성 검사 ============================
 function checkEmail(){
 	var emailExp = /^[0-9a-zA-Z]{1}([-_.0-9a-zA-Z])*@([0-9a-zA-Z]+).([a-zA-Z]+)(.[a-zA-Z]+){0,1}$/;
 	var remail = document.querySelector("#email").value.replace(/ /g,"");
@@ -240,4 +238,21 @@ function checkName(){
 		return false;
 	}
 	return true;
+}
+
+
+function checkTel(){
+	var telexp = /^01[0|1|6|7|8|9]{1}[0-9]{7,8}$/;
+	var rtel = document.querySelector("#tel").value.replace(/ /g,"").replace(/-/g,"");
+	
+	if(rtel == null || rtel == ""){
+		return false;
+	}
+	
+	if(telexp.test(rtel) == true){	
+		var tel = changeTelFormat(rtel);
+		document.querySelector("#tel").value = tel;
+		return true;
+	}
+	return false;
 }
