@@ -62,6 +62,9 @@ function whenClickPlus(priceType, price){
 
 	//총 티켓수 증가
 	changeTicketTotalCount(1);
+	
+	//총 가격 증가
+	getTotalPrice( parseInt(price) );
 }
 
 function whenClickMinus(priceType, price){
@@ -77,6 +80,10 @@ function whenClickMinus(priceType, price){
 		
 		//총 티켓수 감소
 		changeTicketTotalCount(-1);
+		
+		//총 가격 증가
+		getTotalPrice( parseInt(price) * -1 );
+		
 	}
 }	
 
@@ -184,19 +191,19 @@ function check(){
 		return false;
 	}
 	
-	fillHiddenfield();
 	return true;
 }
 
-function fillHiddenfield(){
-	var A_price = document.querySelector("#A_total_price").innerText; //어른
-	var Y_price = document.querySelector("#Y_total_price").innerText; //청소년
-	var B_price = document.querySelector("#B_total_price").innerText; //유아
-	
-	document.querySelector("#total_price").value = parseInt(A_price) + parseInt(B_price)+ parseInt(Y_price);
+function getTotalPrice(price){
+	var total_price = document.querySelector("#total_price").value;
 
+	total_price.value = parseInt(total_price.value) + price;
 }
 
+function isExistDomNodeById(id){
+	if(document.querySdocument.querySelector("#"+id)!= null )return true;
+	return false;
+}
 
 //000-0000-0000 format으로 변경
 function changeTelFormat(tel){

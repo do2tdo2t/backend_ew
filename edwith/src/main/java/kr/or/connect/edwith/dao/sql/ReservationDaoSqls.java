@@ -130,6 +130,6 @@ public class ReservationDaoSqls {
 			" , reservation_name " + 
 			" ,reservation_tel as reservation_telephone  " + 
 			"from reservation_info " + 
-			"group by reservation_email, reservation_name,reservation_tel " + 
+			"group by reservation_email " + 
 			"having reservation_email=:reservationInfoEmail";
 }

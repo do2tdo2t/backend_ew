@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,6 +140,16 @@ public class ReservationApiController {
 		
 		return map;
 	}
+	
+	
+	@PutMapping("/{reservationId}")
+	public Integer deleteReservation(
+			@PathVariable(name="reservationId", required=true) int reservationId ) {
+		
+		int status = reservationService.deleteReservation(reservationId);
+		return 0;
+	}
+	
 	
 	public void fileUpload(MultipartFile file) {
 		try (FileOutputStream fos = new FileOutputStream("c:/tmp/" + file.getOriginalFilename());

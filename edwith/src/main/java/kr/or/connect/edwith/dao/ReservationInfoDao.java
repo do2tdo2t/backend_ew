@@ -11,4 +11,5 @@ public interface ReservationInfoDao {
 	public int countByEmail(String reservationInfoEmail);
 	public int insertReservationInfo(ReservationInfo reservationInfo);
 	public Boolean selectReservationInfoByEmail(ReservationInfo reservationInfo);
+	public int deleteReservationById(int reservationId);
 }

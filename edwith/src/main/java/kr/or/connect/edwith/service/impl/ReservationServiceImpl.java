@@ -128,8 +128,14 @@ public class ReservationServiceImpl implements ReservationService {
 	public boolean checkReservations(ReservationInfo reservationInfo) {
 		
 		return reservationInfoDao.selectReservationInfoByEmail(reservationInfo);
-		//if(cnt > 1) return true;
-		//return false;
+		
+	}
+
+	@Override
+	public int deleteReservation(int reservationId) {
+		int cnt = reservationInfoDao.deleteReservationById(reservationId);
+		if(cnt > 1) return 200;
+		else return -1;
 	}
 	
 }

@@ -94,4 +94,10 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 	
 	}
 
+	@Override
+	public int deleteReservationById(int reservationId) {
+		
+		return 0;
+	}
+
 }

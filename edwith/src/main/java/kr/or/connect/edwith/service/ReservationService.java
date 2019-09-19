@@ -16,4 +16,5 @@ public interface ReservationService {
 	public int putReservationInfo(ReservationInfo reservationInfo);
 	public int putReservationComment(int reservationInfoId, ReservationUserComment comment);
 	public boolean checkReservations(ReservationInfo reservationInfo);
+	public int deleteReservation(int reservationId);
 }
