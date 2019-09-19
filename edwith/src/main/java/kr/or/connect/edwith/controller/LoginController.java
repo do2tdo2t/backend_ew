@@ -34,9 +34,8 @@ public class LoginController {
 	}
 	
 	@PostMapping("/try")
-	public ModelAndView check(HttpServletRequest request) {
+	public ModelAndView check(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		HttpSession session = request.getSession();
 		
 		String reservationEmail = request.getParameter("reservationEmail");
 		logger.debug("PHJ.. try login...reservationEmail : {}",reservationEmail);

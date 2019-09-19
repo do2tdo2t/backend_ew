@@ -11,7 +11,7 @@ function init(){
 }
 
 function ajaxReservations(){
-	var email= 'dorosi@connect.co.kr';
+	var email = document.querySelector("#remail").value;
 	var url = "/edwith/api/reservations";
 	url = url + "?reservationEmail="+email;
 	$.ajax({
@@ -82,7 +82,7 @@ function adjustTemplate(revList){
 			}else{
 				//confirmTicket 확정티켓
 				confirmedHtml += confirmedTemp(item);
-				cnt_map["confirmed"] = cnt_map["confirmed"] + 1;
+				cnt_map.set("confirmed", cnt_map.get("confirmed") + 1 );
 			}
 		}
 	});
@@ -133,13 +133,16 @@ function adjustTotal(cnt_map){
 	
 	cnt_map.forEach(function(value, key){
 		id = "rev_cnt_"+key;
+		console.log(id);
 		document.querySelector("#"+id).innerText = value;
+		console.log(document.querySelector("#"+id).innerText);
 		
 		total += value;
 	});
 	
 	document.querySelector("#rev_cnt_total").innerText = total;
 }
+
 /*
 Handlebars.registerHelper( 'wasRevComplete' ,function(options){
 	

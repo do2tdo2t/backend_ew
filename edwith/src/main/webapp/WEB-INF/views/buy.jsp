@@ -27,9 +27,14 @@
             <header class="header_tit">
                 <h1 class="logo">
                     <a href="/edwith" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                    <a href="./mainpage.html" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                    <a href="/edwith" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                 </h1>
-                <a href="#" class="btn_my"> <span title="예약확인">예약확인</span> </a>
+                <c:if test="${sessionScope.rChk == 'y' }">
+                	<a href="/edwith/api/reservations/mypage" class="btn_my"> <span class="viewReservation" title="예약확인">${sessionScope.remail }</span> </a>
+                </c:if>
+                <c:if test="${sessionScope.rChk != 'y' }">
+                	<a href="/edwith/login/page" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
+                </c:if>
             </header>
         </div>
         <div class="ct">
@@ -43,7 +48,7 @@
                         <ul class="visual_img">
                             <li class="item" style="width: 414px;"> <img alt="" src="/edwith/${displayInfoImage.saveFileName }"> <span class="img_bg"></span>
                                 <div class="preview_txt">
-                                    <h2 class="preview_txt_tit"></h2> <em class="preview_txt_dsc">₩12,000 ~ </em><em class="preview_txt_dsc">2017.2.17.(금)~2017.4.18.(화), 잔여티켓 2769매</em> </div>
+                                    <h2 class="preview_txt_tit"></h2> <em class="preview_txt_dsc"></em><em class="preview_txt_dsc"></em> </div>
                             </li>
                         </ul>
                     </div>
@@ -100,16 +105,16 @@
                             <!-- 예매하기 form -->
                             <form class="form_horizontal" id="reservateForm" accept-charset="UTF-8" >
                                 <div class="inline_form"> <label class="label" for="name"> <span class="spr_book ico_nessasary">필수</span> <span>예매자</span> </label>
-                                    <div class="inline_control"> <input type="text" name="reservationName" id="name" class="text" placeholder="홍길동" onfocusout="checkName();" maxlength="17"></div>
+                                    <div class="inline_control"> <input type="text" name="reservationName" id="name" class="text" placeholder="홍길동" onfocusout="checkName();" maxlength="17" value="${sessionScope.rname }"></div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="tel"> <span class="spr_book ico_nessasary">필수</span> <span>연락처</span> </label>
                                     <div class="inline_control tel_wrap">
-                                        <input type="tel" name="reservationTelephone" id="tel" class="tel" value="" onfocusout="checkTel();" placeholder="휴대폰 입력 시 예매내역 문자발송">
+                                        <input type="tel" name="reservationTelephone" id="tel" class="tel" onfocusout="checkTel();" placeholder="휴대폰 입력 시 예매내역 문자발송" value="${sessionScope.rtel }">
                                         <div class="warning_msg">형식이 틀렸거나 너무 짧아요</div>
                                     </div>
                                 </div>
                                 <div class="inline_form"> <label class="label" for="email">  <span class="spr_book ico_nessasary" >필수</span> <span>이메일</span> </label>
-                                    <div class="inline_control"> <input type="email" name="reservationEmail" id="email" class="email" value="" onfocusout="checkEmail();" placeholder="crong@codesquad.kr" maxlength="50"> </div>
+                                    <div class="inline_control"> <input type="email" name="reservationEmail" id="email" class="email" onfocusout="checkEmail();" placeholder="crong@codesquad.kr" maxlength="50" value="${sessionScope.remail }"> </div>
                                 </div>
                                 <div class="inline_form last"> <label class="label" for="message">예매내용</label>
                                     <div class="inline_control">

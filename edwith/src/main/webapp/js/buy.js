@@ -147,6 +147,7 @@ function ajax(){
 		},
 		success :function(json){
 			alert("예약이 완료 되었습니다.");
+			location.replace('/edwith/api/reservations/mypage');
 			//로그인 처리
 		}
 	});
@@ -200,7 +201,7 @@ function fillHiddenfield(){
 //000-0000-0000 format으로 변경
 function changeTelFormat(tel){
 	var list = [];
-	if (rtel.length == 7)
+	if (tel.length == 7)
 		mid = 3;
 	else mid = 4;
 	
