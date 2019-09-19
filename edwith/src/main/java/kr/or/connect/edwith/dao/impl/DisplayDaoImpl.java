@@ -38,7 +38,7 @@ public class DisplayDaoImpl implements DisplayInfoDao {
 			
 			DisplayInfo displayInfo=jdbc.queryForObject(SELECT_DISPLAY_INFO_BY_ID,params,rowMapper);
 			
-			displayInfo.setOpeningHours(displayInfo.getOpeningHours().replaceAll("-", "<br> -"));
+			//displayInfo.setOpeningHours(displayInfo.getOpeningHours().replaceAll("-", "<br> -"));
 			
 			return displayInfo;
 		}catch(EmptyResultDataAccessException e) {

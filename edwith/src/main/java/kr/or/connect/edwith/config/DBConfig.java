@@ -17,7 +17,7 @@ public class DBConfig implements TransactionManagementConfigurer{
 
 	private String url = "jdbc:mysql://localhost:3306/edwith?useUnicode=true&characterEncoding=utf8";
 
-	private String username = "user01";
+	private String username = "root";
 
 	private String password = "qweop01";
 
