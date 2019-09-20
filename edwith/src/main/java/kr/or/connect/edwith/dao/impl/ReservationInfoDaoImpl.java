@@ -96,8 +96,10 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 
 	@Override
 	public int deleteReservationById(int reservationId) {
+		Map<String,?> params = Collections.singletonMap("reservationInfoId", reservationId);
 		
-		return 0;
+		return jdbc.update(UPDATE_CANCLE_YN_BY_ID, params);
+		
 	}
 
 }

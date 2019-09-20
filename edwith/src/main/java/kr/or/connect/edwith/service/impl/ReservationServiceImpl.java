@@ -91,8 +91,6 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		for(ReservationInfoPrice price : reservationInfo.getPrices()) {
 			price.setReservationInfoId(reservationInfoId);
-			
-			
 			list.add(price);
 		}
 		logger.debug("PHJ: Set ReservationInfo : {} : "+ list.toString() );
@@ -134,7 +132,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int deleteReservation(int reservationId) {
 		int cnt = reservationInfoDao.deleteReservationById(reservationId);
-		if(cnt > 1) return 200;
+		if(cnt == 1) return 200;
 		else return -1;
 	}
 	

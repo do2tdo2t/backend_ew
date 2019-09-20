@@ -53,7 +53,7 @@
 						</a></li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_back"></i> <em class="tit" >취소·환불</em> <span
-								class="figure" id="rev_cnt_cancle">0</span>
+								class="figure" id="rev_cnt_cancel">0</span>
 						</a></li>
 					</ul>
 				</div>
@@ -111,7 +111,7 @@
 									<div class="right"></div>
 								</div>
 							</div> 
-							<div id="wrap_cancle_item">
+							<div id="wrap_cancel_item">
 							
 							</div>
 						</li>
@@ -137,20 +137,21 @@
 	<!-- 취소 팝업 -->
 	<!-- [D] 활성화 display:block, 아니오 버튼 or 닫기 버튼 클릭 시 숨김 display:none; -->
 	<div class="popup_booking_wrapper" style="display: none;">
+		<input type="hidden" class="rev_id" />
 		<div class="dimm_dark" style="display: block"></div>
 		<div class="popup_booking refund">
 			<h1 class="pop_tit">
-				<span>서비스명/상품명</span> <small class="sm">2000.0.00.(월)2000.0.00.(일)</small>
+				<span class="title"></span> <small class="sm">예약일 : <span class="rev_date"> </span></small>
 			</h1>
 			<div class="nomember_alert">
 				<p>취소하시겠습니까?</p>
 			</div>
 			<div class="pop_bottom_btnarea">
 				<div class="btn_gray">
-					<a href="#" class="btn_bottom"><span>아니오</span></a>
+					<a href="javascript:whenClickNo()" class="btn_bottom"><span>아니오</span></a>
 				</div>
 				<div class="btn_green">
-					<a href="#" class="btn_bottom"><span>예</span></a>
+					<a href="javascript:whenClickYes()" class="btn_bottom"><span>예</span></a>
 				</div>
 			</div>
 			<!-- 닫기 -->
@@ -170,17 +171,17 @@
 
 <script type="rev_template" id="rev_basic_item_template">
 	<article class="card_item"> 
-		<a href="/edwith/api/products/{{displayInfoId}}" class="link_booking_details">
+		
 		<div class="card_body">
 			<div class="left"></div>
 			<div class="middle">
-				<div class="card_detail">
+				<div class="card_detail" id="card_detail_{{reservationInfoId}}">
 					<em class="booking_number">No.{{reservationInfoId}}</em>
-					<h4 class="tit">{{displayInfo.productDescription}}</h4>
+					<a href="" class="link_booking_details"> <h4 class="tit">{{displayInfo.productDescription}}</h4> </a> 
 					<ul class="detail">
 						<li class="item">
 							<span class="item_tit">예약일</span> 
-							<em class="item_dsc">{{reservationDate}}</em>
+							<em class="item_dsc rev_date">{{reservationDate}}</em>
 						</li>
 						<li class="item">
 							<span class="item_tit">카테고리</span> 
@@ -200,7 +201,7 @@
 					</div>
 					<!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
 					<div class="booking_cancel">
-						<button class="btn"><span>취소</span></button>
+						<button class="btn" onclick="whenClickCancelBtn({{reservationInfoId}})"><span>취소</span></button>
 					</div>
 				</div>
 			</div>
@@ -211,7 +212,7 @@
 			<div class="middle "></div>
 			<div class="right"></div>
 		</div>
-	</a> 
+	
 	<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a> 
 </article>
 
@@ -268,7 +269,7 @@
 </article> 
 
 </script>
-<script type="rev_template" id="rev_cancle_item_template" >
+<script type="rev_template" id="rev_cancel_item_template" >
 	<article class="card_item"> 
 		<a href="/edwith/api/products/{{displayInfoId}}" class="link_booking_details">
 		<div class="card_body">

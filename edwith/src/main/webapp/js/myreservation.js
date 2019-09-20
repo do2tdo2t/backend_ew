@@ -34,7 +34,6 @@ function ajaxReservations(){
 			data = JSON.parse(json);
 			console.log(data);
 			adjustTemplate(data.reservations);
-			
 		}
 	});
 }
@@ -42,22 +41,20 @@ function ajaxReservations(){
 function adjustTemplate(revList){
 	//handlebar 사용하기 위한 템플릿
 	var confirmedTemp = Handlebars.compile(document.querySelector("#rev_basic_item_template").innerHTML);
-	var cancleTemp =Handlebars.compile(document.querySelector("#rev_cancle_item_template").innerHTML);
+	var cancelTemp =Handlebars.compile(document.querySelector("#rev_cancel_item_template").innerHTML);
 	var usedTemp =Handlebars.compile(document.querySelector("#rev_used_item_template").innerHTML);
 	var noneHtml = document.querySelector("#rev_none_item_template").innerHTML
 	
-	var cnt_map = new Map( [["cancle", 0] , ["confirmed" , 0],["used" , 0]] );
-	
+	var cnt_map = new Map( [["cancel", 0] , ["confirmed" , 0],["used" , 0]] );
 	
 	var obj = new Object();
 	obj["key"] = "value";
 	var obj2 = {}
 	obj2["key"] = "value";
 	
-	
 	var html;
 	var confirmedHtml ='';
-	var cancleHtml = '';
+	var cancelHtml = '';
 	var usedHtml = '';
 	
 	//오늘 날짜
@@ -70,10 +67,10 @@ function adjustTemplate(revList){
 		dateSrc = item.reservationDate.split(" ")[0];
 		rdate = stringToDate(dateSrc);
 		
-		if( item.cancleYn == true) {
-			//cancleTicket 취소 티켓
-			cancleHtml += cancleTemp(item);
-			cnt_map.set("cancle",cnt_map.get("cancle") + 1 );
+		if( item.cancelYn == true) {
+			//cancelTicket 취소 티켓
+			cancelHtml += cancelTemp(item);
+			cnt_map.set("cancel",cnt_map.get("cancel") + 1 );
 		}else{
 			if(isUsedTicket(new Date(), rdate) ){
 				//usedTicket 사용완료 티켓
@@ -88,8 +85,8 @@ function adjustTemplate(revList){
 	});
 	
 	//예약 내역이 없을 경우
-	if(cancleHtml == ''){
-		cancleHtml = noneHtml.replace("{{msg}}","취소된 예약이 없습니다.");
+	if(cancelHtml == ''){
+		cancelHtml = noneHtml.replace("{{msg}}","취소된 예약이 없습니다.");
 	}
 	if(usedHtml == ''){
 		usedHtml = noneHtml.replace("{{msg}}","예약 리스트가 없습니다.");
@@ -99,7 +96,7 @@ function adjustTemplate(revList){
 	}
 	
 	//템플릿이 적용 후 HTML 넣기
-	document.querySelector("#wrap_cancle_item").innerHTML = cancleHtml;
+	document.querySelector("#wrap_cancel_item").innerHTML = cancelHtml;
 	document.querySelector("#wrap_confirmed_item").innerHTML = confirmedHtml;
 	document.querySelector("#wrap_used_item").innerHTML = usedHtml;
 	
@@ -130,17 +127,78 @@ function adjustTotal(cnt_map){
 	
 	document.querySelector("#rev_cnt_total").innertText = total;
 	
-	
 	cnt_map.forEach(function(value, key){
 		id = "rev_cnt_"+key;
 		console.log(id);
 		document.querySelector("#"+id).innerText = value;
-		console.log(document.querySelector("#"+id).innerText);
-		
 		total += value;
 	});
 	
 	document.querySelector("#rev_cnt_total").innerText = total;
+}
+
+//------------------- 예약 취소 -------------------------
+function whenClickCancelBtn(id){
+	var modal = document.querySelector(".popup_booking_wrapper");
+	var detail = document.querySelector("#card_detail_"+id);
+	
+	var title = detail.querySelector(".tit").innerText;
+	var rev_date =  detail.querySelector(".rev_date").innerText;
+	
+	modal.querySelector(".title").innerText = title;
+	modal.querySelector(".rev_date").innerText = rev_date;
+	modal.querySelector(".rev_id").value = id;
+	
+	//modal 보이기
+	modal.style.display = 'block';
+}
+
+function whenClickNo(){
+	var modal = document.querySelector(".popup_booking_wrapper");
+	modal.style.display = 'none';
+}
+
+function whenClickYes(){
+	var modal = document.querySelector(".popup_booking_wrapper");
+	var id = modal.querySelector(".rev_id").value;
+	
+	modal.style.display = 'none';
+	
+	//ajax
+	ajaxDeleteRev(id);
+}
+
+
+function ajaxDeleteRev(id){
+	var url = "/edwith/api/reservations/"+id;
+	$.ajax({
+		url: url,
+		type: 'PUT',
+		//beforeSend: function(xhr){
+		//xhr.overrideMimeType( "json/application; charset=utf-8" );
+		//},
+		contentType :"application/json;charset=UTF-8",
+		dataType : 'json',
+		data : id,
+		statusCode: {
+		    404: function() {
+		      alert( "page not found" );
+		    }
+		},
+		error: function(error){
+			console.log(error);
+		},
+		success :function(json){
+			json = JSON.stringify(json);
+			data = JSON.parse(json);
+			if(data == 200 ){
+				alert("예약이 정상적으로 취소되었습니다.");
+			}else{
+				alert("예약 취소에 실패했습니다. 잠시후 다시 시도해주세요.");
+			}
+			ajaxReservations();
+		}
+	});
 }
 
 /*

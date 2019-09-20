@@ -154,8 +154,7 @@ function ajax(){
 		},
 		success :function(json){
 			alert("예약이 완료 되었습니다.");
-			location.replace('/edwith/api/reservations/mypage');
-			//로그인 처리
+			location.replace('/edwith');
 		}
 	});
 	
@@ -216,6 +215,7 @@ function changeTelFormat(tel){
 	list.push(tel.substring(3,mid));
 	list.push(tel.substring((3+mid),4));
 	tel = list.join('-');
+	console.log(tel);
 	return tel;
 }
 
@@ -237,7 +237,7 @@ function checkEmail(){
 function checkName(){
 	var englishExp = /[^A-Za-z]/;
 	var korExp = /[^가-힣]/;
-	var rname = document.querySelector("#name").value.replace(" ","");
+	var rname = document.querySelector("#name").value.replace(/ /g,"");
 	
 	if(rname == null || rname == ""){
 		return false;
@@ -259,7 +259,7 @@ function checkTel(){
 	
 	if(telexp.test(rtel) == true){	
 		var tel = changeTelFormat(rtel);
-		document.querySelector("#tel").value = tel;
+		//document.querySelector("#tel").value = tel;
 		return true;
 	}
 	return false;

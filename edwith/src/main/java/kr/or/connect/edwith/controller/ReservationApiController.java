@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +112,8 @@ public class ReservationApiController {
 	}
 	
 	@PostMapping
-	public Integer putReservation(HttpServletRequest request, @RequestBody ReservationInfo reservationInfo) {
+	public Integer putReservation(HttpServletRequest request, 
+			@RequestBody ReservationInfo reservationInfo, HttpSession session) {
 		logger.info("POST /api/reservations..");
 		logger.info("POST /api/reservations.. Params: {}", reservationInfo.toString());
 		
@@ -145,9 +147,11 @@ public class ReservationApiController {
 	@PutMapping("/{reservationId}")
 	public Integer deleteReservation(
 			@PathVariable(name="reservationId", required=true) int reservationId ) {
-		
+	
 		int status = reservationService.deleteReservation(reservationId);
-		return 0;
+		logger.debug("PHJ : ResrevationApiController.. deleteReservation().. : Result : {}", status);
+		
+		return status;
 	}
 	
 	

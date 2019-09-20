@@ -132,4 +132,7 @@ public class ReservationDaoSqls {
 			"from reservation_info " + 
 			"group by reservation_email " + 
 			"having reservation_email=:reservationInfoEmail";
+	
+	public static final String UPDATE_CANCLE_YN_BY_ID =
+			"update reservation_info set cancel_flag = true  where id = :reservationInfoId";
 }

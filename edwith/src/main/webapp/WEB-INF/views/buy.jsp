@@ -76,7 +76,7 @@
                             <div class="count_control">
                                 <div class="clearfix">
                                     <a href="javascript:whenClickMinus('${price.key }',${price.value.price } )" class="btn_plus_minus spr_book2 ico_minus3" title="빼기"> </a> 
-                                    <input type="tel" class="count_control_input" value="0" readonly title="수량" id="${price.key }_qty" >
+                                    <input type="qty" class="count_control_input" value="0" readonly title="수량" id="${price.key }_qty" >
                                     <a href="javascript:whenClickPlus('${price.key }',${price.value.price })"  class="btn_plus_minus spr_book2 ico_plus3" title="더하기">
                                     </a>
                                 </div>
