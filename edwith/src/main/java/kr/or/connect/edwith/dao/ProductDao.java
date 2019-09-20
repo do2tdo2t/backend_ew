@@ -10,4 +10,6 @@ public interface ProductDao {
 
 	Float getAverageScore(Integer productId);
 	Integer getCountById(Integer categoryId);
+
+	String getProductDescription(Integer productId);
 }

@@ -23,5 +23,3 @@
  
 
 파일 업로드를 처리하는 FileController를 작성합니다.
-
-package kr.or.connect.guestbook.controller;/html>   

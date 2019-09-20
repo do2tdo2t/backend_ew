@@ -14,4 +14,5 @@ public interface ProductService {
 	public ProductImage getProductImage(Integer productId);
 	public  List<ProductPrice> getProductPrices(Integer productId);
 	public Float getAverageScore(Integer productId);
+	public String getProductDescription(Integer productId);
 }

@@ -1,6 +1,8 @@
 package kr.or.connect.edwith.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -90,7 +92,7 @@ public class ReservationApiController {
 	}
 	
 	@GetMapping("/mypage")
-	public ModelAndView page() {
+	public ModelAndView mypage() {
 		logger.debug("PHJ... request page()");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("myreservation");
@@ -121,16 +123,84 @@ public class ReservationApiController {
 		
 		return result;
 	}
-
+	
+	@GetMapping("/review/{productId}/{reservationInfoId}")
+	public ModelAndView reviewPage(
+			@PathVariable(name="productId",required = true) Integer productId,
+			@PathVariable(name="reservationInfoId",required = true) Integer reservationInfoId) {
+		logger.debug("PHJ... ReservationApiController... reviewPage()");
+		
+		String productName = productService.getProductDescription(productId);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productId", productId);
+		mav.addObject("reservationInfoId", reservationInfoId);
+		mav.addObject("productName", productName);
+		mav.setViewName("reviewWrite");
+		return mav;
+	}
+	
+	/* comment 등록 */
 	@PostMapping("/{reservationInfoId}/comments")
 	public Integer putReservationComment(
+			HttpServletRequest request,
 			@PathVariable(name = "reservationInfoId", required = true) int reservationInfoId,
-			@RequestParam("file") MultipartFile file, @RequestBody ReservationUserComment comment) {
-
+			@RequestParam("file") List<MultipartFile> files, 
+			@RequestBody ReservationUserComment comment) {
+		
+		String path = request.getServletContext().getRealPath("/");
+		System.out.println(path);
+		
+		//insert
 		
 		int result = reservationService.putReservationComment(reservationInfoId, comment);
 		return result;
 	}
+
+
+
+	
+	public void fileUpload(MultipartFile file) {
+		String folder = "/edwith/files/";
+		String newFileName = getFileNewName("/edwith/files/",file.getOriginalFilename());
+		
+		//file 새로운 이름으로 생성
+		try {
+			file.transferTo(new File(folder,newFileName));
+		}catch(IOException e) {
+			throw new RuntimeException("file Save" + " Error");
+		}
+		
+		try (FileOutputStream fos = new FileOutputStream("/edwith/files/" + file.getOriginalFilename());
+				InputStream is = file.getInputStream();) {
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			while ((readCount = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, readCount);
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException("file Save" + " Error");
+		}
+	}
+	
+	public String getFileNewName(String folder, String orgFileName) {
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyyMMddHHmmss");
+		int idx = orgFileName.lastIndexOf("."); // 마지막 .의 위치를 구함
+		
+		String fileExtension = orgFileName.substring(idx+1);
+		String newFileName = format.format(new Date())+"."+fileExtension;
+		
+		File fCheck = new File(folder,orgFileName);
+		
+		fCheck = new File(folder,newFileName);
+
+		while(!fCheck.exists()) {
+			newFileName = format.format(new Date())+"."+fileExtension;
+			fCheck = new File(folder,newFileName);
+		}
+		return newFileName;
+	}
+	
 	
 	@GetMapping("/{productId}")
 	public Map getCommentsAll(
@@ -155,18 +225,6 @@ public class ReservationApiController {
 	}
 	
 	
-	public void fileUpload(MultipartFile file) {
-		try (FileOutputStream fos = new FileOutputStream("c:/tmp/" + file.getOriginalFilename());
-				InputStream is = file.getInputStream();) {
-			int readCount = 0;
-			byte[] buffer = new byte[1024];
-			while ((readCount = is.read(buffer)) != -1) {
-				fos.write(buffer, 0, readCount);
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException("file Save" + " Error");
-		}
-	}
 	
 	
 

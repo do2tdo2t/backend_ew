@@ -28,6 +28,8 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
         registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
         registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
         registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+        registry.addResourceHandler("/files/**").addResourceLocations("/files/").setCachePeriod(31556926);
+        
     }
  
     // default servlet handler를 사용하게 합니다.
@@ -61,7 +63,8 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LogInterceptor());
 		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/edwith/api/reservations/mypage");
-	
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/edwith/api/reservations/review");
+		
 	}
     
     

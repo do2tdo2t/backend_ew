@@ -124,5 +124,12 @@ public class ProductDaoSqls {
 			"from reservation_user_comment " + 
 			"group by product_id having product_id = :productId";
 	
+	public static final String GET_PRODUCT_DESCRIPTION =
+			"select " + 
+			"	distinct description " + 
+			"from reservation_info " + 
+			"inner join product " + 
+			"on product.id = product_id " + 
+			"where product_id = :productId; ";
 	
 }

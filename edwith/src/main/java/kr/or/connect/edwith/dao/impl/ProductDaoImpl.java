@@ -65,4 +65,11 @@ public class ProductDaoImpl implements ProductDao {
 		
 		return jdbc.queryForObject(GET_AVERAGE_SCORE, params,Float.class);
 	}
+
+	@Override
+	public String getProductDescription(Integer productId) {
+		Map<String,?> params = Collections.singletonMap("productId", productId);
+		
+		return jdbc.queryForObject(GET_PRODUCT_DESCRIPTION, params,String.class);
+	}
 }

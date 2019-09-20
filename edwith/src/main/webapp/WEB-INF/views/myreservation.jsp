@@ -254,7 +254,7 @@
 						</em>
 					</div>
 					<div class="booking_cancel">
-						<a href="./reviewWrite.html"><button class="btn"><span>예매자 리뷰 남기기</span></button></a>
+						<a href="/edwith/api/reservations/review/{{displayInfo.productId}}/{{reservationInfoId}}"><button class="btn"><span>예매자 리뷰 남기기</span></button></a>
 					</div>
 				</div>
 			</div>

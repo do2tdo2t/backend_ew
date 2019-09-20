@@ -74,4 +74,10 @@ public class ProductServiceImpl implements ProductService {
 		return productImageDao.selectByProductId(productId);
 	}
 
+	@Override
+	public String getProductDescription(Integer productId) {
+		
+		return productDao.getProductDescription(productId);
+	}
+
 }
