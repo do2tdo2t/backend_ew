@@ -5,7 +5,7 @@ public class FileInfo {
 	private String fileName;
 	private String saveFileName;
 	private String contentType;
-	private int deleteFlag;
+	private int deleteFlag = 0;
 	private String createDate;
 	private String modifyDate;
 	public int getId() {

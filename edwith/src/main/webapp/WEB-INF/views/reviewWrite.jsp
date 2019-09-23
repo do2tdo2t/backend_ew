@@ -30,7 +30,7 @@
 				</div>
 				<!-- 리뷰 별점 -->
 				
-		<form method="post" action="/api/comments/1" enctype="multipart/form-data">  -->
+			<form method="post" action="/edwith/api/reservations/${reservationInfoId }/comments" enctype="multipart/form-data">
 				<div class="write_act">
 					<p class="title_star">별점과 이용경험을 남겨주세요.</p>
 					<div class="review_rating rating_point">
@@ -48,6 +48,7 @@
 							<span class="span"></span>
 							<!-- [D] 0점일 때 gray_star 추기 -->
 							<span class="star_rank gray_star">0</span>
+							<input type="hidden" name ="score" id="score" value=0 />
 						</div>
 					</div>
 				</div>
@@ -65,7 +66,7 @@
 						</span>
 						<span class="left_space">(단, 리뷰 포인트는 ID 당 1일 최대 5건까지 지급됩니다.)</span>
 					</a>
-					<textarea cols="30" rows="10" class="review_textarea" id="review_textarea"></textarea>
+					<textarea cols="30" rows="10" class="review_textarea" id="review_textarea" name="comment"></textarea>
 				</div>
 				<!-- //리뷰 입력 -->
 
@@ -76,7 +77,7 @@
 							<i class="fn fn-image1" aria-hidden="true"></i>
 							<span class="text_add_photo">사진 추가</span>
 						</label>
-						<input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept="image/*" multiple>
+						<input type="file" class="hidden_input" name="files" id="reviewImageFileOpenInput" accept="image/*" multiple>
 						<div class="guide_review">
 							<span>0</span>/400
 							<span>(최소5자이상)</span>
@@ -101,7 +102,8 @@
 					<button class="bk_btn"><span class="btn_txt">리뷰 등록</span></button>
 				</div>
 				<!-- //리뷰 등록 -->
-				
+			<input type="hidden" id="reservationInfoId" value = "${reservationInfoId }">
+			<input type="hidden" id="productId" value = "${productId }">			
 		</form>
 		
 			</div>
@@ -116,8 +118,7 @@
 			<span class="copyright">© NAVER Corp.</span>
 		</div>
 	</footer>
-	<input type="hidden" id="reservationInfoId" value = "${reservationInfoId }">
-	<input type="hidden" id="productId" value = "${productId }">
+	
 	<script src="/edwith/js/reviewWrite.js"></script>
 	<script type="template" id="img_template">
 		<li class="item" id='{{imgUrl}}'>

@@ -3,6 +3,15 @@ document.addEventListener("DOMContentLoaded", function(){
 	init();
 })
 
+function init(){
+	document.querySelectorAll(".rating_rdo").forEach(function(checkbox){
+		if(checkbox.classList.contains("checked"))
+			checkbox.classList.remove("checked");
+		checkbox.checked = false;
+	});
+	document.querySelector("#score").value = "0";
+}
+
 document.querySelectorAll(".rating_rdo").forEach(function(item){
 	item.addEventListener("click",function(evt){
 		var target = evt.target;
@@ -23,6 +32,7 @@ document.querySelectorAll(".rating_rdo").forEach(function(item){
 		var star_rank = document.querySelector(".star_rank");
 		star_rank.innerText = target.value;
 		star_rank.classList.remove("gray_star");
+		document.querySelector("#score").value = target.value;
 	});
 })
 
@@ -56,10 +66,6 @@ document.querySelector("#reviewImageFileOpenInput").addEventListener("change",fu
 		name = event.target.files[0].name;
 	}
 });
-
-function init(){
-	
-}
 
 function focusReviewArea(){
 	var target = document.querySelector(".review_write_info");
