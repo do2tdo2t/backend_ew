@@ -77,13 +77,13 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int getCountByEmail(String reservationInfoEmail) {
+	public Integer getCountByEmail(String reservationInfoEmail) {
 		
 		return reservationInfoDao.countByEmail(reservationInfoEmail);
 	}
 
 	@Override
-	public int putReservationInfo(ReservationInfo reservationInfo) {
+	public Integer putReservationInfo(ReservationInfo reservationInfo) {
 		
 		int reservationInfoId = reservationInfoDao.insertReservationInfo(reservationInfo);
 		logger.debug("PHJ: Success put ReservationInfo : reservationInfoId : "+reservationInfoId);
@@ -102,9 +102,9 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int putReservationComment(int reservationInfoId, ReservationUserComment comment) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Integer putReservationComment(int reservationInfoId, ReservationUserComment comment) {
+		comment.setReservationInfoId(reservationInfoId);
+		return commentDao.putComment(comment);
 	}
 
 	@Override
@@ -130,10 +130,16 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int deleteReservation(int reservationId) {
+	public Integer deleteReservation(int reservationId) {
 		int cnt = reservationInfoDao.deleteReservationById(reservationId);
 		if(cnt == 1) return 200;
 		else return -1;
+	}
+
+	@Override
+	public Integer putCommentImage(ReservationUserCommentImage commentImage) {
+		
+		return commentImageDao.insertOne(commentImage);
 	}
 	
 }

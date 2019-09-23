@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -70,6 +71,19 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 		params.put("productId", productId);
 		
 		return jdbc.queryForObject(COUNT_COMMENTS_BY_PRODUCT_ID, params, Integer.class );
+	}
+
+	@Override
+	public Integer putComment(ReservationUserComment comment) {
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		paramSource.addValue("product_id", comment.getProductId());
+		paramSource.addValue("reservation_info_id", comment.getReservationInfoId());
+		paramSource.addValue("score", comment.getScore());
+		paramSource.addValue("comment",comment.getComment() );
+		
+		
+		return insertAction.executeAndReturnKey(paramSource).intValue();
 	}
 
 }

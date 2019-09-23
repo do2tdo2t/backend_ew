@@ -9,4 +9,5 @@ public interface ReservationUserCommentDao {
 	public int insertComment(ReservationUserComment comment);
 	public List<ReservationUserComment> selectAllByProductId(Integer productId);
 	public Integer getCountCommentsByProductId(Integer productId);
+	public Integer putComment(ReservationUserComment comment);
 }

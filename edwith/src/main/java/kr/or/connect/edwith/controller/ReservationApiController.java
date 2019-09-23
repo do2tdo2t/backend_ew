@@ -38,6 +38,7 @@ import kr.or.connect.edwith.dto.FileInfo;
 import kr.or.connect.edwith.dto.ProductPrice;
 import kr.or.connect.edwith.dto.ReservationInfo;
 import kr.or.connect.edwith.dto.ReservationUserComment;
+import kr.or.connect.edwith.dto.ReservationUserCommentImage;
 import kr.or.connect.edwith.service.DisplayService;
 import kr.or.connect.edwith.service.FileInfoService;
 import kr.or.connect.edwith.service.ProductService;
@@ -48,7 +49,6 @@ import kr.or.connect.edwith.service.ReservationService;
 public class ReservationApiController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private static final String uploadFolderUrl = "C://Users/tmp";
 	
 	@Autowired
 	ReservationService reservationService;
@@ -159,10 +159,11 @@ public class ReservationApiController {
 		
 		logger.debug("putReservationComment files size : {}, comment : {}", files.size(),
 				comment);
-		String path = request.getServletContext().getRealPath("/");
-		System.out.println(path);
+		
+		String uploadFolderUrl  = request.getServletContext().getRealPath("/")+"tmp";
+		System.out.println(uploadFolderUrl);
 		//1. file upload
-		String filePath = uploadFolderUrl;
+	
 		FileInfo fileInfo = null;
 		String saveFileName = "";
 		
@@ -172,27 +173,39 @@ public class ReservationApiController {
 		List<Integer> fileInfoIds = new ArrayList<Integer>();
 		for(MultipartFile file : files) {
 			fileInfo = new FileInfo();
-			saveFileName = fileUpload(file);
+			saveFileName = fileUpload(uploadFolderUrl,file);
 			logger.debug("new File name : {}",saveFileName);
 			fileInfo.setFileName(saveFileName);
-			fileInfo.setSaveFileName(filePath+"/"+saveFileName);
+			fileInfo.setSaveFileName(uploadFolderUrl+"/"+saveFileName);
 			fileInfo.setContentType(file.getContentType());
 			
-			//fileInfoId = fileInfoService.putFileInfo(fileInfo);
-			//System.out.println(fileInfoId);
-			//fileInfoIds.add(fileInfoId);
+			fileInfoId = fileInfoService.putFileInfo(fileInfo);
+			logger.info("fileInfoId : {}",fileInfoId);
+			fileInfoIds.add(fileInfoId);
 		}
 		
 		//3. comment db update
-		//int result = reservationService.putReservationComment(reservationInfoId, comment);
+		int reservationUserCommentId = reservationService.putReservationComment(reservationInfoId, comment);
+		
 		
 		//4. comment_image db update
-		logger.debug("check point ~ ");
+		ReservationUserCommentImage commentImage;
+		List<ReservationUserCommentImage> commentImages = new ArrayList<ReservationUserCommentImage>();
+		for(Integer fid : fileInfoIds) {
+			commentImage = new ReservationUserCommentImage();
+			commentImage.setFileId(fid);
+			commentImage.setReservationInfoId(reservationInfoId);
+			commentImage.setReservationUserCommentId(reservationUserCommentId);
+			commentImages.add(commentImage);
+			int result = reservationService.putCommentImage(commentImage);
+			logger.info("comment image id : {}", result);
+		}
+		
 		return 200;
 	}
 
 
-	public String fileUpload(MultipartFile file) {
+	public String fileUpload(String uploadFolderUrl,MultipartFile file) {
 		logger.debug("ReservationApiController fileUpload()...old file name : {}", file.getOriginalFilename());
 		
 		File uploadFolder = new File(uploadFolderUrl);
@@ -200,20 +213,20 @@ public class ReservationApiController {
 			System.out.println("존재하지 X.. ");
 			uploadFolder.mkdir();
 		}
-		String folder = uploadFolderUrl;
-		String newFileName = getFileNewName(folder+"/",file.getOriginalFilename());
+		
+		String newFileName = getFileNewName(uploadFolderUrl,file.getOriginalFilename());
 		
 		//file 새로운 이름으로 생성
 		try {
-			file.transferTo(new File(folder,newFileName));
-			logger.debug("ReservationApiController fileUpload().. {} {}", file.getName(), file.getOriginalFilename());
+			file.transferTo(new File(uploadFolderUrl, newFileName));
 		}catch(IOException e) {
-			throw new RuntimeException("file Save" + " Error...1");
-
+			//throw new RuntimeException("file Save" + " Error...1");
+			e.printStackTrace();
 		}
 		
-		logger.debug("ReservationApiController fileUpload()... file upload...");
+		logger.debug("ReservationApiController fileUpload()... file upload...{}",file.getOriginalFilename());
 		
+		/*
 		try (FileOutputStream fos = new FileOutputStream(folder+"/" + file.getOriginalFilename());
 				InputStream is = file.getInputStream();) {
 			int readCount = 0;
@@ -222,14 +235,14 @@ public class ReservationApiController {
 				fos.write(buffer, 0, readCount);
 			}
 		} catch (Exception ex) {
-			throw new RuntimeException("file Save" + " Error");
+			//throw new RuntimeException("file Save" + " Error");
+			ex.printStackTrace();
 		}
-		
+		*/
 		return newFileName;
 	}
 	
 	public String getFileNewName(String folder, String orgFileName) {
-		logger.debug("ReservationApiController getFileNewName()....{}{}",folder,orgFileName);
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyyMMddHHmmss");
 		String date;
 		int idx = orgFileName.lastIndexOf("."); // 마지막 .의 위치를 구함
@@ -245,7 +258,7 @@ public class ReservationApiController {
 			fCheck = new File(folder,newFileName);
 		}
 		
-		logger.debug("ReservationApiController newFileName()....{}/{}",folder,newFileName);
+		logger.debug("ReservationApiController newFileName()....{} {}",folder,newFileName);
 		return newFileName;
 	}
 	

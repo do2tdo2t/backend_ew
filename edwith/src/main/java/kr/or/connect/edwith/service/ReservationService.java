@@ -12,9 +12,10 @@ public interface ReservationService {
 	public List<ReservationUserComment> getCommentsAll(Integer productId);
 	public List<ReservationUserCommentImage> getCommentImages(Integer commentId);
 	public List<ReservationInfo> getReservationInfos(String reservationInfoEmail);
-	public int getCountByEmail(String reservationInfoEmail);
-	public int putReservationInfo(ReservationInfo reservationInfo);
-	public int putReservationComment(int reservationInfoId, ReservationUserComment comment);
+	public Integer getCountByEmail(String reservationInfoEmail);
+	public Integer putReservationInfo(ReservationInfo reservationInfo);
+	public Integer putReservationComment(int reservationInfoId, ReservationUserComment comment);
 	public boolean checkReservations(ReservationInfo reservationInfo);
-	public int deleteReservation(int reservationId);
+	public Integer deleteReservation(int reservationId);
+	public Integer putCommentImage(ReservationUserCommentImage commentImage);
 }
