@@ -81,7 +81,8 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 		paramSource.addValue("reservation_info_id", comment.getReservationInfoId());
 		paramSource.addValue("score", comment.getScore());
 		paramSource.addValue("comment",comment.getComment() );
-		
+		paramSource.addValue("create_date", comment.getCreateDate());
+		paramSource.addValue("modify_date", comment.getModifyDate());
 		
 		return insertAction.executeAndReturnKey(paramSource).intValue();
 	}

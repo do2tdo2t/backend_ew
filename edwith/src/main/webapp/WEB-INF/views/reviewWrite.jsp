@@ -79,8 +79,8 @@
 						</label>
 						<input type="file" class="hidden_input" name="files" id="reviewImageFileOpenInput" accept="image/*" multiple>
 						<div class="guide_review">
-							<span>0</span>/400
-							<span>(최소5자이상)</span>
+							<!--  <span>0</span>/400
+							<span></span> -->
 						</div>
 					</div>
 
@@ -102,8 +102,8 @@
 					<button class="bk_btn"><span class="btn_txt">리뷰 등록</span></button>
 				</div>
 				<!-- //리뷰 등록 -->
-			<input type="hidden" id="reservationInfoId" value = "${reservationInfoId }">
-			<input type="hidden" id="productId" value = "${productId }">			
+			<input type="hidden" id="reservationInfoId" name="reservationInfoId" value = "${reservationInfoId }">
+			<input type="hidden" id="productId"  name="productId" value = "${productId }">			
 		</form>
 		
 			</div>
@@ -121,9 +121,9 @@
 	
 	<script src="/edwith/js/reviewWrite.js"></script>
 	<script type="template" id="img_template">
-		<li class="item" id='{{imgUrl}}'>
+		<li class="item" id='thumb_{{imgUrl}}'>
 			<a href="javascript:removeImage('{{imgUrl}}')" class="anchor">
-			<span class="spr_book ico_del">삭제</span>
+			<span class="spr_book ico_del" >삭제</span>
 			</a>
 			<img width="130" alt="" class="item_thumb" src="{{src}}">
 			<span class="img_border">{{imgUrl}}</span>

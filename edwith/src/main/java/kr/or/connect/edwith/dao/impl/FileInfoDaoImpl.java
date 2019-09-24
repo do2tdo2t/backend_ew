@@ -35,6 +35,8 @@ public class FileInfoDaoImpl implements FileInfoDao {
 		paramSource.addValue("file_name", fileInfo.getFileName());
 		paramSource.addValue("save_file_name", fileInfo.getSaveFileName());
 		paramSource.addValue("content_type", fileInfo.getContentType());
+		paramSource.addValue("create_date", fileInfo.getCreateDate());
+		paramSource.addValue("modify_date", fileInfo.getModifyDate());
 		paramSource.addValue("delete_flag",0 );
 		
 		logger.debug("FileInfoDaoImpl... {}",fileInfo.toString());

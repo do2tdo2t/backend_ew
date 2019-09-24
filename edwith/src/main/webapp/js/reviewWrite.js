@@ -37,10 +37,10 @@ document.querySelectorAll(".rating_rdo").forEach(function(item){
 })
 
 
-	
 document.querySelector("#reviewImageFileOpenInput").addEventListener("change",function(event){
 	//file preview 만들기
-	var get_file = event.target.files;
+	var get_files = event.target.files;
+	
 	var name = '';
 	
 	
@@ -54,22 +54,36 @@ document.querySelector("#reviewImageFileOpenInput").addEventListener("change",fu
 	reader.onload = (function(e){
 		var html = document.querySelector("#img_template").innerHTML;	
 		var src = e.target.result;
-		console.log(name);
+		
+		//썸네일 이미지 추가
 		html = html.replace(/{{imgUrl}}/g, name )
 						.replace(/{{src}}/g,src);
 		var ul = document.querySelector(".lst_thumb");
 		ul.innerHTML = ul.innerHTML + html; 
 	});
 	
-	if(get_file){
+	if(get_files){
 		reader.readAsDataURL(this.files[0]);
 		name = event.target.files[0].name;
+		console.log(" name : "+name);
 	}
 });
+
+function removeImage(id){
+	var thumb_img = document.querySelector("#thumb_"+id);
+	var ul = document.querySelector(".lst_thumb");
+	
+	ul.innerHTML = '';
+	var file = document.querySelector("#reviewImageFileOpenInput").files;
+	//thumb_img.remove();
+	file.value = '';
+}
+
 
 function focusReviewArea(){
 	var target = document.querySelector(".review_write_info");
 	target.style.cssText = "display:none";
 	document.querySelector("#review_textarea").focus();
+	
 	
 }

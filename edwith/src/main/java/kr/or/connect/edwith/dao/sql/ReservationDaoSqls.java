@@ -18,7 +18,7 @@ public class ReservationDaoSqls {
 			"left join reservation_info " + 
 			"on reservation_info_id = reservation_info.id " + 
 			"where reservation_info.product_id=:productId " +
-			"order by reservation_user_comment.create_date " + 
+			"order by reservation_user_comment.create_date DESC " + 
 			"limit 0,:limit";
 	
 	public static final String SELECT_COMMENTS_ALL_BY_ID =
@@ -38,7 +38,7 @@ public class ReservationDaoSqls {
 			"left join reservation_info " + 
 			"on reservation_info_id = reservation_info.id " + 
 			"where reservation_info.product_id=:productId " +
-			"order by reservation_user_comment.create_date ";
+			"order by reservation_user_comment.create_date DESC";
 	
 	public static final String SELECT_COMMENT_IMAGES_BY_ID =
 			"select " + 

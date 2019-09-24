@@ -278,8 +278,7 @@
 				<div class="info_area">
 					<div class="review_info">
 						<span class="grade">{score}</span> <span class="name">{reservationName}</span>
-						<span class="date">{date} 방문
-						</span>
+						<span class="date">{date} 방문</span>
 					</div>
 				</div>
 			</div>

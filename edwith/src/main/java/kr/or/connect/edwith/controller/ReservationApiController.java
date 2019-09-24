@@ -1,9 +1,5 @@
 package kr.or.connect.edwith.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import kr.or.connect.edwith.dto.DisplayInfo;
 import kr.or.connect.edwith.dto.DisplayInfoImage;
 import kr.or.connect.edwith.dto.FileInfo;
@@ -43,6 +38,8 @@ import kr.or.connect.edwith.service.DisplayService;
 import kr.or.connect.edwith.service.FileInfoService;
 import kr.or.connect.edwith.service.ProductService;
 import kr.or.connect.edwith.service.ReservationService;
+import kr.or.connect.edwith.util.DateUtil;
+import kr.or.connect.edwith.util.FileUploadUtil;
 
 @RestController
 @RequestMapping(path = "/api/reservations")
@@ -149,9 +146,9 @@ public class ReservationApiController {
 		return mav;
 	}
 	
-	/* comment 등록 */
+	/***************************************** comment 등록 **************************************************/
 	@PostMapping("/{reservationInfoId}/comments")
-	public Integer putReservationComment(
+	public ModelAndView putReservationComment(
 			HttpServletRequest request,
 			@PathVariable(name = "reservationInfoId", required = true) int reservationInfoId,
 			@RequestParam("files") List<MultipartFile> files, 
@@ -160,33 +157,42 @@ public class ReservationApiController {
 		logger.debug("putReservationComment files size : {}, comment : {}", files.size(),
 				comment);
 		
-		String uploadFolderUrl  = request.getServletContext().getRealPath("/")+"tmp";
-		System.out.println(uploadFolderUrl);
-		//1. file upload
-	
+		//String uploadFolderUrl  = request.getServletContext().getRealPath("/")+"tmp";
+		String folder  = request.getSession().getServletContext().getRealPath("/img_comment");
+		String url ="img_comment/";
+		
 		FileInfo fileInfo = null;
 		String saveFileName = "";
 		
-		
+		//1. file upload
 		//2. file_info db update
 		Integer fileInfoId;
 		List<Integer> fileInfoIds = new ArrayList<Integer>();
 		for(MultipartFile file : files) {
 			fileInfo = new FileInfo();
-			saveFileName = fileUpload(uploadFolderUrl,file);
-			logger.debug("new File name : {}",saveFileName);
+			saveFileName = FileUploadUtil.getNewFileName(folder,file.getOriginalFilename());
+
 			fileInfo.setFileName(saveFileName);
-			fileInfo.setSaveFileName(uploadFolderUrl+"/"+saveFileName);
+			fileInfo.setSaveFileName(url+"/"+saveFileName);
 			fileInfo.setContentType(file.getContentType());
+			fileInfo.setCreateDate(DateUtil.getNowDate());
+			fileInfo.setModifyDate(DateUtil.getNowDate());
 			
+			//fileInfo insert db
 			fileInfoId = fileInfoService.putFileInfo(fileInfo);
-			logger.info("fileInfoId : {}",fileInfoId);
+			logger.info("putReservationComment fileInfoId : {}",fileInfoId);
 			fileInfoIds.add(fileInfoId);
+			
+			
+			//fileupload
+			FileUploadUtil.fileUpload(folder, saveFileName, file);
+			
 		}
 		
 		//3. comment db update
+		comment.setCreateDate(DateUtil.getNowDate());
+		comment.setModifyDate(DateUtil.getNowDate());
 		int reservationUserCommentId = reservationService.putReservationComment(reservationInfoId, comment);
-		
 		
 		//4. comment_image db update
 		ReservationUserCommentImage commentImage;
@@ -201,67 +207,12 @@ public class ReservationApiController {
 			logger.info("comment image id : {}", result);
 		}
 		
-		return 200;
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/api/products/"+comment.getProductId());
+		return mav;
 	}
 
-
-	public String fileUpload(String uploadFolderUrl,MultipartFile file) {
-		logger.debug("ReservationApiController fileUpload()...old file name : {}", file.getOriginalFilename());
-		
-		File uploadFolder = new File(uploadFolderUrl);
-		if(!uploadFolder.isDirectory()) {
-			System.out.println("존재하지 X.. ");
-			uploadFolder.mkdir();
-		}
-		
-		String newFileName = getFileNewName(uploadFolderUrl,file.getOriginalFilename());
-		
-		//file 새로운 이름으로 생성
-		try {
-			file.transferTo(new File(uploadFolderUrl, newFileName));
-		}catch(IOException e) {
-			//throw new RuntimeException("file Save" + " Error...1");
-			e.printStackTrace();
-		}
-		
-		logger.debug("ReservationApiController fileUpload()... file upload...{}",file.getOriginalFilename());
-		
-		/*
-		try (FileOutputStream fos = new FileOutputStream(folder+"/" + file.getOriginalFilename());
-				InputStream is = file.getInputStream();) {
-			int readCount = 0;
-			byte[] buffer = new byte[1024];
-			while ((readCount = is.read(buffer)) != -1) {
-				fos.write(buffer, 0, readCount);
-			}
-		} catch (Exception ex) {
-			//throw new RuntimeException("file Save" + " Error");
-			ex.printStackTrace();
-		}
-		*/
-		return newFileName;
-	}
-	
-	public String getFileNewName(String folder, String orgFileName) {
-		SimpleDateFormat format = new SimpleDateFormat ( "yyyyMMddHHmmss");
-		String date;
-		int idx = orgFileName.lastIndexOf("."); // 마지막 .의 위치를 구함
-		
-		String fileExtension = orgFileName.substring(idx+1);
-		
-		String newFileName = format.format(new Date())+"."+fileExtension;
-		File fCheck = new File(folder,newFileName);
-	
-		while(fCheck.exists()) {
-			date = format.format(new Date());
-			newFileName = date +"."+ fileExtension;
-			fCheck = new File(folder,newFileName);
-		}
-		
-		logger.debug("ReservationApiController newFileName()....{} {}",folder,newFileName);
-		return newFileName;
-	}
-	
+	/**************************************************************************************************/
 	
 	@GetMapping("/{productId}")
 	public Map getCommentsAll(
