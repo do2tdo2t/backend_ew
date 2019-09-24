@@ -18,6 +18,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import kr.or.connect.edwith.interceptor.LogInterceptor;
 import kr.or.connect.edwith.interceptor.LoginInterceptor;
 
+/*
+ * EnableWebMvc : 요청또는 응답 객체에 대한 자동 JSON 변환 처리.(MessageConvertor)
+ * */
 
 @Configuration
 @EnableWebMvc

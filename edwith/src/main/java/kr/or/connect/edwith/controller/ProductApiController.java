@@ -24,6 +24,8 @@ import kr.or.connect.edwith.service.DisplayService;
 import kr.or.connect.edwith.service.ProductService;
 import kr.or.connect.edwith.service.ReservationService;
 
+
+
 @RestController
 @RequestMapping(path="/api/products")
 public class ProductApiController {
@@ -41,12 +43,12 @@ public class ProductApiController {
 	@GetMapping
 	public Map<String,Object> list(@RequestParam(name="start",required=false, defaultValue="0")int start, 
 				@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId){
-		logger.debug("PHJ : start={},categoryId={}",start,categoryId);
+		//logger.debug("PHJ : start={},categoryId={}",start,categoryId);
 		List<Product> list = productService.getProducts(categoryId,start);
 		int totalCnt = productService.getCountById(categoryId);
 		Map<String,Object> map= new HashMap<String,Object>();
 		
-		logger.debug("PHJ : products size={}",list.size());
+		//logger.debug("PHJ : products size={}",list.size());
 		
 		map.put("products", list);
 		map.put("totalCnt", totalCnt);

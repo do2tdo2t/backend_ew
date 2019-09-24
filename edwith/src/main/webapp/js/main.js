@@ -219,6 +219,7 @@ function ajaxPromotion(){
 }
 
 function addPromotion(items){
+	console.log(items);
 	var html = document.querySelector("#promotionItem").innerHTML;
 	
 	var template = new Template();

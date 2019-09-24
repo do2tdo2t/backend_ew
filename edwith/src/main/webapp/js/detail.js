@@ -69,7 +69,10 @@ class Template{
 	}
 }
 
-//ajax로 한줄평 가져오기
+/*
+ * 
+ * ajax로 한줄평 가져오기
+ * */
 function ajaxComments(productId){
 
 	var url = "/edwith/api/reservations/"+productId;
