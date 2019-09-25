@@ -26,7 +26,9 @@ import kr.or.connect.edwith.interceptor.LoginInterceptor;
 @EnableWebMvc
 @ComponentScan(basePackages = { "kr.or.connect.edwith.controller" })
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
-
+	/*
+	 * 리소스 경로 등록
+	 * */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
@@ -48,6 +50,9 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
         registry.addViewController("/").setViewName("main");
     }
     
+	/*
+	 * 뷰 리졸버 등록
+	 * */
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -58,18 +63,22 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		
 		super.addArgumentResolvers(argumentResolvers);
 		
 	}
 
+	/*
+	 * 멀티파트 리졸버 등록
+	 * */
 	 @Bean
 	 public MultipartResolver multipartResolver() {
 	        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
 	        multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
 	        return multipartResolver;
 	 }
-	 
+	/*
+	 * 인터셉터 등록
+	 * */	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LogInterceptor());

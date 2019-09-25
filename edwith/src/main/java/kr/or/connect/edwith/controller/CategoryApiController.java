@@ -19,12 +19,13 @@ public class CategoryApiController {
 	CategoryService categoryService;
 	
 	
+	/*
+	 * 카테고리 전체 목록 조회
+	 * */
 	@GetMapping
 	public Map<String,Object> list() {
 		 Map<String,Object> map = new HashMap<String,Object>();
-		 
 		 List<Category> items = categoryService.getCategories();
-		 
 		 map.put("items", items);
 		 
 		 return map;

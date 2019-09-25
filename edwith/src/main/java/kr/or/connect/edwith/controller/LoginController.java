@@ -23,7 +23,9 @@ public class LoginController {
 	@Autowired
 	ReservationService reservationService;
 	
-	
+	/*
+	 * 이메일 로그인 페이지
+	 * */
 	@GetMapping("/page")
 	public ModelAndView page() {
 		
@@ -33,9 +35,16 @@ public class LoginController {
 		return mav;
 	}
 	
+	/*
+	 * 로그인 시도
+	 * 로그인은 예매 내역이 있을 경우에만 가능
+	 * 로그인에 성공하면 Session에 로그인 정보를 저장
+	 * */	
 	@PostMapping("/try")
 	public ModelAndView check(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		
+		session.setMaxInactiveInterval(60*60);
 		
 		String reservationEmail = request.getParameter("reservationEmail");
 		logger.debug("PHJ.. try login...reservationEmail : {}",reservationEmail);
