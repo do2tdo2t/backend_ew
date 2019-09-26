@@ -23,6 +23,11 @@ public class PromotionDaoImpl implements PromotionDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
+	
+	/*
+	 * 프로모션(Promotion) 전체 가져오기
+	 * 
+	 * */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Promotion> selectAll() {

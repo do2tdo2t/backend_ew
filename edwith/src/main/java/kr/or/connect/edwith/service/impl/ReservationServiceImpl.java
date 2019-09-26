@@ -40,9 +40,12 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	DisplayInfoDao displayInfoDao;
 	
+	/*
+	 * 리뷰 전체 가져오기
+	 * */
 	@Override
 	public List<ReservationUserComment> getComments(Integer productId) {
-		List<ReservationUserComment> comments = commentDao.selectByProductId(productId, COMMENT_COUNT);
+		List<ReservationUserComment> comments = commentDao.selectAllByProductId(productId, COMMENT_COUNT);
 		List<ReservationUserCommentImage> images = null;
 		for (ReservationUserComment comment : comments) {
 			images = getCommentImages(comment.getCommentId());
@@ -50,13 +53,19 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 		return comments;
 	}
-
+	
+	/*
+	 * 리뷰 이미지 가져오기
+	 * */
 	@Override
 	public List<ReservationUserCommentImage> getCommentImages(Integer commentId) {
 		List<ReservationUserCommentImage> commentImages = commentImageDao.selectAllByCommentId(commentId);
 		return commentImages;
 	}
 
+	/*
+	 * 나의 예매 목록 가져오기
+	 * */
 	@Override
 	public List<ReservationInfo> getReservationInfos(String reservationInfoEmail) {
 		
@@ -69,26 +78,39 @@ public class ReservationServiceImpl implements ReservationService {
 		for (ReservationInfo reservation : list) {
 			displayInfoId = reservation.getDisplayInfoId();
 			
-			displayInfo = displayInfoDao.selectDisplayInfoById(displayInfoId);
+			displayInfo = displayInfoDao.selectOneById(displayInfoId);
 			reservation.setDisplayInfo(displayInfo);
 		}
 		
 		return list;
 	}
 
+	
+	/*
+	 * 나의 예매 목록 개수 가져오기
+	 * */
 	@Override
 	public Integer getCountByEmail(String reservationInfoEmail) {
 		
 		return reservationInfoDao.countByEmail(reservationInfoEmail);
 	}
 
+	
+	/*
+	 * 예매하기
+	 * 1. 예매 정보 넣기
+	 * 2. 예매 가격 넣기
+	 * */
 	@Override
 	public Integer putReservationInfo(ReservationInfo reservationInfo) {
 		
+		//1. 예매 정보 넣기
 		int reservationInfoId = reservationInfoDao.insertReservationInfo(reservationInfo);
+		
 		logger.debug("PHJ: Success put ReservationInfo : reservationInfoId : "+reservationInfoId);
 		List<ReservationInfoPrice> list = new ArrayList<ReservationInfoPrice>();
 		
+		//1. 예매 가격 정보
 		for(ReservationInfoPrice price : reservationInfo.getPrices()) {
 			price.setReservationInfoId(reservationInfoId);
 			list.add(price);
@@ -101,12 +123,18 @@ public class ReservationServiceImpl implements ReservationService {
 		return 200;
 	}
 
+	/*
+	 * 리뷰 넣기
+	 * */
 	@Override
 	public Integer putReservationComment(int reservationInfoId, ReservationUserComment comment) {
 		comment.setReservationInfoId(reservationInfoId);
-		return commentDao.putComment(comment);
+		return commentDao.insertComment(comment);
 	}
 
+	/*
+	 * 리뷰 전체 가져오기
+	 * */
 	@Override
 	public List<ReservationUserComment> getCommentsAll(Integer productId) {
 		
@@ -122,6 +150,9 @@ public class ReservationServiceImpl implements ReservationService {
 		return comments;
 	}
 
+	/*
+	 * 예약 여부 확인하기
+	 * */
 	@Override
 	public boolean checkReservations(ReservationInfo reservationInfo) {
 		
@@ -129,6 +160,9 @@ public class ReservationServiceImpl implements ReservationService {
 		
 	}
 
+	/*
+	 * 예약 취소하기
+	 * */
 	@Override
 	public Integer deleteReservation(int reservationId) {
 		int cnt = reservationInfoDao.deleteReservationById(reservationId);
@@ -136,6 +170,10 @@ public class ReservationServiceImpl implements ReservationService {
 		else return -1;
 	}
 
+	
+	/*
+	 * 리뷰에 등록된 이미지 정보 넣기
+	 * */
 	@Override
 	public Integer putCommentImage(ReservationUserCommentImage commentImage) {
 		

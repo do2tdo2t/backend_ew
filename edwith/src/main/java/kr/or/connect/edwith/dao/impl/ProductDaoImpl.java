@@ -31,7 +31,8 @@ public class ProductDaoImpl implements ProductDao {
 	}
 	
 	 /*
-	  * 파일 정보 (FileInfo) 넣기
+	  * 공연, 전시 목록 가져오기
+	  * 목록 개수 : start * limit (start가 0일경우에는 limit만큼 가져옴)
 	  * */
 	@Override
 	public List<Product> selectAll(Integer categoryId,Integer start, Integer limit) {
@@ -49,9 +50,11 @@ public class ProductDaoImpl implements ProductDao {
 		
 	}
 
-
+	 /*
+	  * 카테고리별 공연, 전시 개수 가져오기
+	  * */
 	@Override
-	public Integer getCountById(Integer categoryId) {
+	public Integer getCountByCategoryId(Integer categoryId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("categoryId",categoryId);
 		
@@ -59,7 +62,9 @@ public class ProductDaoImpl implements ProductDao {
 		else return jdbc.queryForObject(COUNT_BY_CATEGORY_ID, params,Integer.class);
 	}
 	
-
+	 /*
+	  * 공연,전시의 평균 평점 구하기
+	  * */
 	@Override
 	public Float getAverageScore(Integer productId) {
 		Map<String,?> params = Collections.singletonMap("productId", productId);
@@ -69,10 +74,24 @@ public class ProductDaoImpl implements ProductDao {
 		return jdbc.queryForObject(GET_AVERAGE_SCORE, params,Float.class);
 	}
 
+	 /*
+	  * 공연, 전시의 상세 설명 구하기 (예약이 되어 있는 건에 한해서)
+	  * */
 	@Override
 	public String getProductDescription(Integer productId) {
 		Map<String,?> params = Collections.singletonMap("productId", productId);
 		
 		return jdbc.queryForObject(GET_PRODUCT_DESCRIPTION, params,String.class);
 	}
+
+	 /*
+	  * 공연, 전시의 상세 설명 구하기
+	  * */
+	@Override
+	public String getProductDescriptionById(Integer productId) {
+		Map<String,?> params = Collections.singletonMap("productId", productId);
+		// TODO Auto-generated method stub
+		return jdbc.queryForObject(GET_PRODUCT_DESCRIPTION_BY_ID, params,String.class);
+	}
+
 }

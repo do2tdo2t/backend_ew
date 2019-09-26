@@ -33,6 +33,10 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ReservationUserCommentDao reservationUserCommentDao;
 	
+	
+	/*
+	 * 공연, 상품 정보 목록 가져오기
+	 * */
 	@Override
 	public List<Product> getProducts(Integer categoryId, Integer start) 
 	{
@@ -43,24 +47,37 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 
+	
+	/*
+	 * 공연, 상품 정보 목록 개수 가져오기
+	 * */
 	@Override
 	public int getCountById(Integer categoryId) {
 		
-		return productDao.getCountById(categoryId);
+		return productDao.getCountByCategoryId(categoryId);
 	}
 
+	/*
+	 * 공연, 상품 정보 이미지 전체 가져오기
+	 * */
 	@Override
 	public List<ProductImage> getProductImages(Integer productId) {
 		
 		return productImageDao.selectAllByProductId(productId);
 	}
 
+	/*
+	 * 공연, 상품 가격 정보 가져오기
+	 * */
 	@Override
 	public List<ProductPrice> getProductPrices(Integer productId) {
 		
 		return productPriceDao.selectAllByProductId(productId);
 	}
 
+	/*
+	 * 공연, 상품 평균 평점 가져오기
+	 * */
 	@Override
 	public Float getAverageScore(Integer productId) {
 		int commentCnt = reservationUserCommentDao.getCountCommentsByProductId(productId);
@@ -68,16 +85,31 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.getAverageScore(productId);
 	}
 
+	/*
+	 * 공연, 상품 평균 이미지 한개 가져오기
+	 * */
 	@Override
 	public ProductImage getProductImage(Integer productId) {
 		// TODO Auto-generated method stub
-		return productImageDao.selectByProductId(productId);
+		return productImageDao.selectOneByProductId(productId);
 	}
 
+	/*
+	 * 공연, 상품 설명 가져오기
+	 * */
 	@Override
 	public String getProductDescription(Integer productId) {
 		
 		return productDao.getProductDescription(productId);
 	}
+
+
+	@Override
+	public String getProductDescriptionById(Integer productId) {
+		// TODO Auto-generated method stub
+		return productDao.getProductDescriptionById(productId);
+	}
+
+
 
 }

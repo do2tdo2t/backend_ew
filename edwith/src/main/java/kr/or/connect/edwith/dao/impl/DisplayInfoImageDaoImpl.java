@@ -19,7 +19,6 @@ import static kr.or.connect.edwith.dao.sql.DisplayDaoSqls.*;
 @Repository
 public class DisplayInfoImageDaoImpl implements DisplayInfoImageDao {
 	 private Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
-	 private static String NAME = "DisplayInfoDaoImpl";
 
 	 private NamedParameterJdbcTemplate jdbc;
 	 private RowMapper<DisplayInfoImage> rowMapper = BeanPropertyRowMapper.newInstance(DisplayInfoImage.class);
@@ -27,9 +26,12 @@ public class DisplayInfoImageDaoImpl implements DisplayInfoImageDao {
 	 public DisplayInfoImageDaoImpl(DataSource dataSource) {
 	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
-	 
+	
+	 /*
+	  * 공연, 전시 상세 (DisplayInfo) 정보 아이디 이미지 조회
+	  * */
 	@Override
-	public DisplayInfoImage selectByDisplayInfoId(Integer displayInfoId) {
+	public DisplayInfoImage selectOneByDisplayInfoId(Integer displayInfoId) {
 		Map<String,?> params = Collections.singletonMap("displayInfoId",displayInfoId);
 		
 		try {

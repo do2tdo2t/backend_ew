@@ -5,26 +5,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+
+/*
+ * 로그 잉터셉터
+ * */
 public class LogInterceptor extends HandlerInterceptorAdapter{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	//Controller 메소드 실행 전
-	/*@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		
-		//System.out.println(handler.toString()+" 가 종료되었습니다. "+modelAndView.getViewName()+"를 view로 사용합니다.");
-		logger.debug("{} 가 종료되었습니다. {}를 view로 사용합니다.",handler.toString(),modelAndView.getViewName() );
-	}*/
-	//Controller 메소드 실행 후
+	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		logger.debug("{} 를 호출했습니다.", handler.toString());
 		
-		//System.out.println(handler.toString()+" 을 호출했습니다. ");
 		return true;
 	}
 	

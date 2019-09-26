@@ -9,15 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 	
+	
+	/*
+	 * 파일을 폴더에 업로드하기 위한 함수
+	 * */
 	public static Integer fileUpload(String folder, String name, MultipartFile file) {
-
 		File uploadFolder = new File(folder);
 		if(!uploadFolder.isDirectory()) {
 			System.out.println("존재하지 X.. ");
 			uploadFolder.mkdir();
 		}
-		
-		//String newFileName = getFileNewName(uploadFolderUrl,file.getOriginalFilename());
 		
 		//file 새로운 이름으로 생성
 		try {
@@ -29,6 +30,9 @@ public class FileUploadUtil {
 		return 1;
 	}
 	
+	/*
+	 * 파일의 중복되지 않은 새로운 이름을 넣기 위한 함수
+	 * */
 	public static String getNewFileName(String folder, String orgFileName) {
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyyMMddHHmmss");
 		String date;

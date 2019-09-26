@@ -25,6 +25,8 @@ public class ReservationUserCommentImageDaoImpl implements ReservationUserCommen
 	private RowMapper<ReservationUserCommentImage> rowMapper = BeanPropertyRowMapper.newInstance(ReservationUserCommentImage.class);
 	private SimpleJdbcInsert insertAction;
 	 
+	
+
 	public ReservationUserCommentImageDaoImpl(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
@@ -32,12 +34,18 @@ public class ReservationUserCommentImageDaoImpl implements ReservationUserCommen
 				.usingGeneratedKeyColumns("id");
 	}
 	
+	/*
+	 * 리뷰 아이디로 리뷰에 등록된 이미지 가져오기
+	 * */
 	@Override
 	public List<ReservationUserCommentImage> selectAllByCommentId(Integer commentId) {
 		Map<String , ?> params = Collections.singletonMap("commentId", commentId);
 		return jdbc.query(SELECT_COMMENT_IMAGES_BY_ID,params,rowMapper);
 	}
 
+	/*
+	 * 리뷰에 등록된 사진 정보 넣기
+	 * */
 	@Override
 	public Integer insertOne(ReservationUserCommentImage commentImage) {
 	MapSqlParameterSource paramSource = new MapSqlParameterSource();

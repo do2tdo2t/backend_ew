@@ -12,6 +12,7 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>
 
+
 <body>
     <div id="container">
         <div class="header">
@@ -114,12 +115,23 @@
         </div>
     </footer>
 
+	<script>
+		document.addEventListener("DOMContentLoaded",function(){
+			document.querySelector(".visual_img");
+				
+			
+		});
 
+	</script>
+	
     <script type="rv-template" id="promotionItem">
-    <li class="item" style="background-image: url(${pageContext.request.contextPath}/{productImageUrl});">
-        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+    <li class="item" style=" width:100%; background-image: url(${pageContext.request.contextPath}/{productImageUrl});">
+        <a href="#"> 
+			<span class="img_btm_border"></span> 
+			<span class="img_right_border"></span> 
+			<span class="img_bg_gra"></span>
             <div class="event_txt">
-                <h4 class="event_txt_tit"></h4>
+                <h4 class="event_txt_tit">{productDescription}</h4>
                 <p class="event_txt_adr"></p>
                 <p class="event_txt_dsc"></p>
             </div>

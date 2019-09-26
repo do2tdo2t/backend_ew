@@ -25,6 +25,11 @@ public class ProductPriceDaoImpl implements ProductPriceDao{
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
+	 /*
+	  * 공연, 전시의 가격 가져오기
+	  * 
+	  * prictType에 따라  A는 어른, B는 유아, Y는 청소년
+	  * */
 	@Override
 	public  List<ProductPrice> selectAllByProductId(Integer productId) {
 		

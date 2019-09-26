@@ -17,6 +17,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 	@Autowired
 	FileInfoDao fileInfoDao;
 	
+	/*
+	 * 파일 정보 넣기
+	 * */
 	@Override
 	public Integer putFileInfo(FileInfo fileInfo) {
 		

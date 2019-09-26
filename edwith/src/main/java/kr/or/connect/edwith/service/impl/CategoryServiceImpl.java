@@ -14,7 +14,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryDao categoryDao;
 	
-	
+	/*
+	 * 카테고리 가져오기
+	 * */
 	@Override
 	public List<Category> getCategories() {
 		

@@ -26,6 +26,11 @@ public class ProductImageDaoImpl implements ProductImageDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		
 	}
+	
+	 /*
+	  * 공연,전시 이미지 전체 가져오기
+	  * (이미지 타입이 'ma' 이거나 'et')
+	  * */
 	@Override
 	public List<ProductImage> selectAllByProductId(Integer productId) {
 		
@@ -33,8 +38,13 @@ public class ProductImageDaoImpl implements ProductImageDao {
 		
 		return jdbc.query(SELECT_ALL_PRODUCT_IMAGE_BY_ID, params, rowMapper);
 	}
+	
+	 /*
+	  * 공연,전시 이미지  가져오기
+	  * (이미지 타입이 'th')
+	  * */
 	@Override
-	public ProductImage selectByProductId(Integer productId) {
+	public ProductImage selectOneByProductId(Integer productId) {
 
 		Map<String,?> params = Collections.singletonMap("productId", productId);
 		

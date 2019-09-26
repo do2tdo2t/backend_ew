@@ -6,16 +6,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartResolver;
 
 import kr.or.connect.edwith.dao.ReservationUserCommentDao;
 import kr.or.connect.edwith.dto.ReservationUserComment;
@@ -35,15 +31,24 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
                 .usingGeneratedKeyColumns("id");
 	}
 	
-	@Bean
-	public MultipartResolver multipartResolver() {
-		org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
-		return multipartResolver;
+	
+
+	/*
+	 * 공연,전시 아이디 기준 예약 리뷰 전체 가져오기
+	 * */
+	@Override
+	public List<ReservationUserComment> selectAllByProductId(Integer productId) {
+		Map<String,Object> params = new HashMap<>();
+		params.put("productId", productId);
+		return jdbc.query(SELECT_COMMENTS_ALL_BY_ID, params, rowMapper );
 	}
 	
+	/*
+	 * 공연,전시 아이디 기준 예약 리뷰 목록 가져오기
+	 * - 목록 개수는 limit
+	 * */
 	@Override
-	public List<ReservationUserComment> selectByProductId(Integer productId, Integer limit) {
+	public List<ReservationUserComment> selectAllByProductId(Integer productId, Integer limit) {
 		
 		Map<String,Object> params = new HashMap<>();
 		params.put("productId", productId);
@@ -52,29 +57,11 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 		return jdbc.query(SELECT_COMMENTS_BY_ID, params, rowMapper );
 	}
 
+	/*
+	 * 리뷰 넣기
+	*/
 	@Override
 	public int insertComment(ReservationUserComment comment) {
-		SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
-		return insertAction.executeAndReturnKey(params).intValue();
-	}
-
-	@Override
-	public List<ReservationUserComment> selectAllByProductId(Integer productId) {
-		Map<String,Object> params = new HashMap<>();
-		params.put("productId", productId);
-		return jdbc.query(SELECT_COMMENTS_ALL_BY_ID, params, rowMapper );
-	}
-
-	@Override
-	public Integer getCountCommentsByProductId(Integer productId) {
-		Map<String,Object> params = new HashMap<>();
-		params.put("productId", productId);
-		
-		return jdbc.queryForObject(COUNT_COMMENTS_BY_PRODUCT_ID, params, Integer.class );
-	}
-
-	@Override
-	public Integer putComment(ReservationUserComment comment) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
 		paramSource.addValue("product_id", comment.getProductId());
@@ -86,5 +73,19 @@ public class ReservationUserCommentDaoImpl implements ReservationUserCommentDao 
 		
 		return insertAction.executeAndReturnKey(paramSource).intValue();
 	}
+	
+	
+	/*
+	 * 공연, 전시 아이디 기준 전체 리뷰 개수 가져오기
+	 * */
+	@Override
+	public Integer getCountCommentsByProductId(Integer productId) {
+		Map<String,Object> params = new HashMap<>();
+		params.put("productId", productId);
+		
+		return jdbc.queryForObject(COUNT_COMMENTS_BY_PRODUCT_ID, params, Integer.class );
+	}
+
+
 
 }

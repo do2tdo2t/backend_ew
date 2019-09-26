@@ -4,6 +4,7 @@ public class Promotion {
 	private int id;
 	private int productId;
 	private String productImageUrl;
+	private String productDescription;
 	
 	public int getId() {
 		return id;
@@ -22,6 +23,12 @@ public class Promotion {
 	}
 	public void setProductImageUrl(String productImageUrl) {
 		this.productImageUrl = productImageUrl;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
 	@Override
 	public String toString() {

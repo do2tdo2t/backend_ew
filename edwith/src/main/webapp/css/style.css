@@ -1280,7 +1280,7 @@ button {
     min-height: 210px;
     font: 0/0 a;
     color: #fff;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
 .group_visual .visual_img .item {
@@ -1288,7 +1288,7 @@ button {
     position: relative;
     display: inline-block;
     white-space: normal;
-    vertical-align: top
+    vertical-align: top;
 }
 
 .group_visual .visual_img .item .img_bg:before,.group_visual .visual_img .item .visual_txt {
@@ -1297,6 +1297,12 @@ button {
     top: 0;
     left: 0;
     right: 0
+}
+
+.slide_event{
+	transition-duration: 1s;
+	transition-timing-function: ease-out;
+	transform:translateX(10px);
 }
 
 .group_visual .visual_img .item .img_bg {

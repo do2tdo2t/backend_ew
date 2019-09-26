@@ -15,6 +15,9 @@ public class PromotionServiceImpl implements PromotionService {
 	@Autowired
 	PromotionDao promotionDao;
 	
+	/*
+	 * 프로모션 목록 전체 가져오기
+	 * */
 	@Override
 	public List<Promotion> getPromotions() {
 		

@@ -132,4 +132,11 @@ public class ProductDaoSqls {
 			"on product.id = product_id " + 
 			"where product_id = :productId; ";
 	
+	public static final String GET_PRODUCT_DESCRIPTION_BY_ID =
+			"select " + 
+			"	distinct description " + 
+			"from product " + 
+			"where id = :productId; ";
+	
+	
 }

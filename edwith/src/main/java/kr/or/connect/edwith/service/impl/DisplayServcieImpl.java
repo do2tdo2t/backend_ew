@@ -21,14 +21,17 @@ public class DisplayServcieImpl implements DisplayService {
 	@Override
 	public DisplayInfo getDisplayInfoById(Integer displayInfoId) {
 		
-		return displayInfoDao.selectDisplayInfoById(displayInfoId);
+		return displayInfoDao.selectOneById(displayInfoId);
 		
 	}
 
+	/*
+	 * 공연, 전시 상세 정보 가져오기
+	 * */
 	@Override
 	public DisplayInfoImage getDisplayInfoImageById(Integer displayInfoId) {
 		// TODO Auto-generated method stub
-		return displayInfoImageDao.selectByDisplayInfoId(displayInfoId);
+		return displayInfoImageDao.selectOneByDisplayInfoId(displayInfoId);
 	}
 
 }

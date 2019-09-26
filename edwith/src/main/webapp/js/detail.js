@@ -10,6 +10,9 @@ function init(){
 	addClickEvent();
 }
 
+/*
+ * tab 클릭시 변경 이벤트
+ * */
 function addClickEvent(){
 	document.querySelectorAll(".tabanchor").forEach(function(item){
 		item.addEventListener("click",function(evt){
@@ -21,8 +24,15 @@ function addClickEvent(){
 
 
 
-/************************************************************************
- * class
+/*
+ * HTML Templating 작업을 위한 class
+ * Template
+ *  - addClass(element, className): element의 클래스에 className 추가 
+ *  - wrap(tag, htmlString) : tag로 html 감싸기
+ *  - insertChildHtml(parent, child) : 자식 노드를 부모 노드에 HTML로 추가
+ *  - insertChildElement(parent, child): 자식 노드를 부모 노드에 DOM 노드로 추가
+ *  - replace(obj,html) : html의 데이터 변경 부분을 데이터로 변경 작업, return string
+ *  - replaceAll(obj,html) : html의 데이터 변경 부분을 리스트의 데이토로 변경 작업 return string of list
  * html에서 {key} 부분을 해당 json 객체의 value로 replace 처리하여 반환
  * */
 class Template{

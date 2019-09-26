@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * myreservation.jsp에서 참조
  */
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -10,6 +10,9 @@ function init(){
 	ajaxReservations();
 }
 
+/*
+ * 서버에 예약 목록 요청 - ajax
+ * */
 function ajaxReservations(){
 	var email = document.querySelector("#remail").value;
 	var url = "/edwith/api/reservations";
@@ -38,6 +41,9 @@ function ajaxReservations(){
 	});
 }
 
+/*
+ * 예약 목록 템플릿 작업
+ * */
 function adjustTemplate(revList){
 	//handlebar 사용하기 위한 템플릿
 	var confirmedTemp = Handlebars.compile(document.querySelector("#rev_basic_item_template").innerHTML);
@@ -103,6 +109,10 @@ function adjustTemplate(revList){
 	adjustTotal(cnt_map);
 }
 
+
+/*
+ * 예약일 기준 사용한 티켓 여부 판단
+ * */
 function isUsedTicket(today, rdate){
 	if(today.getTime() - rdate.getTime() > 0 ){
 		return true;
@@ -111,6 +121,9 @@ function isUsedTicket(today, rdate){
 	}
 }
 
+/*
+ * 문자열을 날짜 데이터로
+ * */
 function stringToDate(dateSrc){
 	var year = dateSrc.split("-")[0];
 	var month = dateSrc.split("-")[1]-1;
@@ -118,7 +131,10 @@ function stringToDate(dateSrc){
 	var date = new Date(year,month,day);
 	return date;
 }
-
+/*
+ * 예약 전체 통계 정보 변경
+ *  - 전체예약, 예약확정, 취소예약, 예약완료 건수 표시
+ * */
 function adjustTotal(cnt_map){
 	var id;
 	var total = 0;
@@ -137,7 +153,9 @@ function adjustTotal(cnt_map){
 	document.querySelector("#rev_cnt_total").innerText = total;
 }
 
-//------------------- 예약 취소 -------------------------
+/*
+ * 예약 취소 버튼 클릭시 이벤트 처리
+ * */
 function whenClickCancelBtn(id){
 	var modal = document.querySelector(".popup_booking_wrapper");
 	var detail = document.querySelector("#card_detail_"+id);
@@ -153,11 +171,17 @@ function whenClickCancelBtn(id){
 	modal.style.display = 'block';
 }
 
+/*
+ * 예약 취소 모듈에서 "아니오" 버튼 클릭시 이벤트 처리
+ * */
 function whenClickNo(){
 	var modal = document.querySelector(".popup_booking_wrapper");
 	modal.style.display = 'none';
 }
 
+/*
+ * 예약 취소 모듈에서 "예" 버튼 클릭시 이벤트 처리
+ * */
 function whenClickYes(){
 	var modal = document.querySelector(".popup_booking_wrapper");
 	var id = modal.querySelector(".rev_id").value;
@@ -168,7 +192,9 @@ function whenClickYes(){
 	ajaxDeleteRev(id);
 }
 
-
+/*
+ * 예약 취소 시  ajax로 서버에 취소 반영 요청 - ajax
+ * */
 function ajaxDeleteRev(id){
 	var url = "/edwith/api/reservations/"+id;
 	$.ajax({
@@ -200,30 +226,3 @@ function ajaxDeleteRev(id){
 		}
 	});
 }
-
-/*
-Handlebars.registerHelper( 'wasRevComplete' ,function(options){
-	
-	var date = new Date();
-	var tyear = date.getFullYear();
-	var tmonth = date.getMonth() + 1
-	var tday = date.getDate();
-	//yyyy-mm-dd time
-	
-	var dateSrc = this.reservationDate.split(" ")[0];
-	var year = dateSrc.split("-")[0];
-	var month = dateSrc.split("-")[1]-1;
-	var day = dateSrc.split("-")[2];
-	var revDate = new Date(year,month,day);
-	var diff = (date.getTime() - revDate.getTime());
-	//diff가 양수이거나 0이면 예약 일자가 지남.
-	console.log(date.getTime() +" " +  revDate.getTime());
-	console.log(tyear+'-'+tmonth+'-'+tday);
-	
-	if(diff < 0 ){
-		return options.fn(this);
-	}else{
-		return options.inverse(this);
-	}
-});
-*/

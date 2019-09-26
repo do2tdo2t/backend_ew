@@ -1,7 +1,6 @@
 package kr.or.connect.edwith.dao.impl;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,24 +33,38 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
         
 	}
 	
+	 /*
+	  * 이메일 기준 모든 예약 내역 가져오기
+	  * */
 	@Override
 	public List<ReservationInfo> selectAllByEmail(String reservationInfoEmail) {
 		Map<String,?> params = Collections.singletonMap("reservationInfoEmail", reservationInfoEmail);
 		return jdbc.query(SELECT_RESERVATION_INFO_BY_EMAIL, params,rowMapper);
 	}
 
+	 /*
+	  * 예약 금액 가져오기
+	  * */
 	@Override
 	public int getTotalPriceById(Integer reservationInfoId) {
 		Map<String,?> params = Collections.singletonMap("reservationInfoId", reservationInfoId);
 		return jdbc.queryForObject(COUNT_TOTATL_PRICE_BY_ID, params,Integer.class);
 	}
 
+	 /*
+	  * 이메일 기준 전체 예약 개수 가져오기
+	  * */
 	@Override
 	public int countByEmail(String reservationInfoEmail) {
 		Map<String,?> params = Collections.singletonMap("reservationInfoEmail", reservationInfoEmail);
 		return jdbc.queryForObject(COUNT_RESERVATION_INFO_BY_EMAIL,params,Integer.class);
 	}
 
+
+	 /*
+	  * 예약하기
+	  * - 반환값 : id (reservation_info 테이블의 id )
+	  * */
 	@Override
 	public int insertReservationInfo(ReservationInfo reservationInfo) {
 		//SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
@@ -74,7 +87,13 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 		
 		return holder.getKey().intValue();
 	}
-
+	
+	
+	 /*
+	  * 이메일 기준 예약 여부 확인하기
+	  * - 반환값 : 해당 이메일로 조회된 예약건이 있으면 true, 없으면 false
+	  * */
+	@SuppressWarnings("unused")
 	@Override
 	public Boolean selectReservationInfoByEmail(ReservationInfo reservationInfo) {
 		Map<String,?> params = Collections.singletonMap("reservationInfoEmail", reservationInfo.getReservationEmail());
@@ -89,11 +108,16 @@ public class ReservationInfoDaoImpl implements ReservationInfoDao {
 		
 		logger.debug("PHJ... login.. reservationInfo : {}",reservationInfo.toString());
 		
-		if(reservationInfo == null) return false;
+		if(reservationInfo == null) 
+			return false;
 		else return true;
 	
 	}
 
+	 /*
+	  * 예약 취소하기 
+	  * - 예약 취소는 cancelYn 행의 값을 true로 변경한다.
+	  * */
 	@Override
 	public int deleteReservationById(int reservationId) {
 		Map<String,?> params = Collections.singletonMap("reservationInfoId", reservationId);

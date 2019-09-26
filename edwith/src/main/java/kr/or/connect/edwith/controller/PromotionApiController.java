@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.edwith.dto.Promotion;
+import kr.or.connect.edwith.service.ProductService;
 import kr.or.connect.edwith.service.PromotionService;
 
 @RestController
@@ -18,7 +19,10 @@ public class PromotionApiController {
 	
 	@Autowired
 	PromotionService promotionService;
+
 	
+	@Autowired
+	ProductService productService;
 	/*
 	 * 프로모션 정보 목록 가져오기
 	 * */
@@ -27,6 +31,12 @@ public class PromotionApiController {
 		Map<String,Object> map = new HashMap<>();
 		
 		List<Promotion> items = promotionService.getPromotions();
+		
+		for(Promotion item : items) {
+			String description = productService.getProductDescriptionById(item.getProductId());
+			item.setProductDescription(description);
+		}
+		
 		map.put("items", items);
 		
 		return map;

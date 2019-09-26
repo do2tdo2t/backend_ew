@@ -18,7 +18,12 @@
 					<a href="/edwith" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
 					<a href="/edwith" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
 				</h1>
-				  <a href="#" class="btn_my"> <span title="예약확인">예약확인</span> </a>
+				<c:if test="${sessionScope.rChk == 'y' }">
+                	<a href="/edwith/api/reservations/mypage" class="btn_my"> <span class="viewReservation" title="예약확인">${sessionScope.remail }</span> </a>
+                </c:if>
+                <c:if test="${sessionScope.rChk != 'y' }">
+                	<a href="/edwith/login/page" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
+                </c:if>
 			</header>
 		</div>
 		

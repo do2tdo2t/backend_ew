@@ -4,7 +4,7 @@ public class PromotionDaoSqls {
 	public static final String SELECT_PROMOTIONS =
 			"select  " + 
 			" promotion.id " + 
-			" , table1.product_id " + 
+			" , table1.product_id as product_id" + 
 			" , product_image_url " + 
 			"from promotion " + 
 			"left join  " + 
@@ -18,4 +18,5 @@ public class PromotionDaoSqls {
 			" where type=\"th\" " + 
 			" ) as table1 " + 
 			"on promotion.product_id = table1.product_id; ";
+	
 }
