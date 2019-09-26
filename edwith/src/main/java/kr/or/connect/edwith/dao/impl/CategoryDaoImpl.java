@@ -21,10 +21,17 @@ public class CategoryDaoImpl implements CategoryDao {
 	@SuppressWarnings("rawtypes")
 	private RowMapper rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
 	
+	/*
+	 * DataSource 빈을 가지고 JDBC Template 생성
+	 * */
 	public CategoryDaoImpl(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
+
 	
+	/*
+	 * 카테고리 목록 가져오기
+	 * */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> selectAllByCategoryID() {

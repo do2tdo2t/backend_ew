@@ -19,7 +19,9 @@ public class PromotionApiController {
 	@Autowired
 	PromotionService promotionService;
 	
-	
+	/*
+	 * 프로모션 정보 목록 가져오기
+	 * */
 	@GetMapping
 	public Map<String,Object> getPromotions(){
 		Map<String,Object> map = new HashMap<>();

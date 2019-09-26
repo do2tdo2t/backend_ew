@@ -30,6 +30,9 @@ public class ProductDaoImpl implements ProductDao {
 		 this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
+	 /*
+	  * 파일 정보 (FileInfo) 넣기
+	  * */
 	@Override
 	public List<Product> selectAll(Integer categoryId,Integer start, Integer limit) {
 		Map<String, Integer> params = new HashMap<>();

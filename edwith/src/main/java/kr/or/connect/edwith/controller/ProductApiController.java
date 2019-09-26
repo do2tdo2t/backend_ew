@@ -40,6 +40,9 @@ public class ProductApiController {
 	@Autowired
 	ReservationService reservationService;
 	
+	/*
+	 * 전시,공연(Product) 정보 리스트 가져오기
+	 * */
 	@GetMapping
 	public Map<String,Object> list(@RequestParam(name="start",required=false, defaultValue="0")int start, 
 				@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId){
@@ -56,6 +59,9 @@ public class ProductApiController {
 		return map;
 	}
 	
+	/*
+	 * 전시,공연 상세(Display) 정보 id로  가져오기
+	 * */
 	@GetMapping("/{displayInfoId}")
 	public ModelAndView item(@PathVariable(name="displayInfoId",required=true) int displayInfoId){
 		

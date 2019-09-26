@@ -10,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping(path="/logout")
 public class LogoutController {
-	
+	/*
+	 * 로그아웃
+	 * */
 	@GetMapping
 	public ModelAndView logout(HttpSession session) {
 		ModelAndView mav = new ModelAndView();

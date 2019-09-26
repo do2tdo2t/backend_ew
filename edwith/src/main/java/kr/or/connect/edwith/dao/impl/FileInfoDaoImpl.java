@@ -27,6 +27,9 @@ public class FileInfoDaoImpl implements FileInfoDao {
 				
 	}
 	
+	 /*
+	  * 파일 정보 (FileInfo) 넣기
+	  * */
 	@Override
 	public Integer insertOne(FileInfo fileInfo) {
 		

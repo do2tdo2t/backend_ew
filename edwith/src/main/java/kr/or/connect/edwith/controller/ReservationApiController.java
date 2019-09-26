@@ -60,7 +60,9 @@ public class ReservationApiController {
 	FileInfoService fileInfoService;
 	
 	
-	
+	/*
+	 * 예매하기 페이지와 공연,전시 상세 정보
+	 * */
 	@GetMapping("/{displayInfoId}/buy")
 	public ModelAndView reservationPage(
 			@PathVariable(name="displayInfoId", required=true) Integer displayInfoId ) {
@@ -97,6 +99,9 @@ public class ReservationApiController {
 		return mav;
 	}
 	
+	/*
+	 * 나의 예약 페이지
+	 * */
 	@GetMapping("/mypage")
 	public ModelAndView mypage() {
 		logger.debug("PHJ... request page()");
@@ -105,6 +110,9 @@ public class ReservationApiController {
 		return mav;
 	}
 	
+	/*
+	 * 나의 예약 목록 가져오기 - Ajax
+	 * */
 	@GetMapping
 	public Map<String, Object> getReservations(
 			@RequestParam(name = "reservationEmail", required = true) String reservationInfoEmail) {
@@ -119,6 +127,9 @@ public class ReservationApiController {
 		return map;
 	}
 	
+	/*
+	 * 예약하기 
+	 * */
 	@PostMapping
 	public Integer putReservation(HttpServletRequest request, 
 			@RequestBody ReservationInfo reservationInfo, HttpSession session) {
@@ -130,6 +141,10 @@ public class ReservationApiController {
 		return result;
 	}
 	
+	
+	/*
+	 * 리뷰 작성 페이지 
+	 * */
 	@GetMapping("/review/{productId}/{reservationInfoId}")
 	public ModelAndView reviewPage(
 			@PathVariable(name="productId",required = true) Integer productId,
@@ -146,7 +161,18 @@ public class ReservationApiController {
 		return mav;
 	}
 	
-	/***************************************** comment 등록 **************************************************/
+	/*
+	 * 리뷰 등록 페이지
+	 * 1. 이미지 파일 업로드
+	 * 2. file_info DB에 파일 정보 업로드
+	 * 3. reservation_user_comment DB에 리뷰 업로드
+	 * 4. reservation_user_comment_image DB에 이미지 정보 업로드
+	 * 
+	 * local variable
+	 *  - folder : 이미지 파일 업로드 폴더의 절대 경로
+	 *  - url : 이미지 파일 업로드 폴더의 웹프로젝트 내 상대 경로
+	 *  - saveFileName : 업로드를 위해 새롭게 얻은 파일 이름
+	 * */
 	@PostMapping("/{reservationInfoId}/comments")
 	public ModelAndView putReservationComment(
 			HttpServletRequest request,
@@ -157,7 +183,7 @@ public class ReservationApiController {
 		logger.debug("putReservationComment files size : {}, comment : {}", files.size(),
 				comment);
 		
-		//String uploadFolderUrl  = request.getServletContext().getRealPath("/")+"tmp";
+		
 		String folder  = request.getSession().getServletContext().getRealPath("/img_comment");
 		String url ="img_comment/";
 		
@@ -182,7 +208,6 @@ public class ReservationApiController {
 			fileInfoId = fileInfoService.putFileInfo(fileInfo);
 			logger.info("putReservationComment fileInfoId : {}",fileInfoId);
 			fileInfoIds.add(fileInfoId);
-			
 			
 			//fileupload
 			FileUploadUtil.fileUpload(folder, saveFileName, file);
@@ -212,8 +237,10 @@ public class ReservationApiController {
 		return mav;
 	}
 
-	/**************************************************************************************************/
 	
+	/*
+	 * 리뷰 가져오기 - Ajax
+	 * */
 	@GetMapping("/{productId}")
 	public Map getCommentsAll(
 			@PathVariable(name="productId", required=true) int productId ) {
@@ -225,7 +252,10 @@ public class ReservationApiController {
 		return map;
 	}
 	
-	
+	/*
+	 * 예약 삭제하기 
+	 * 예약 삭제는 실제 리뷰를 삭제하지 않고, cancleYn 컬럼의 값을 true로 변경
+	 * */
 	@PutMapping("/{reservationId}")
 	public Integer deleteReservation(
 			@PathVariable(name="reservationId", required=true) int reservationId ) {

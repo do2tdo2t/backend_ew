@@ -29,7 +29,11 @@ public class DisplayDaoImpl implements DisplayInfoDao {
 	 public DisplayDaoImpl(DataSource dataSource) {
 	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
+
 	 
+	 /*
+	  * 공연, 전시 상세 (DisplayInfo) 정보 아이디로 조회
+	  * */
 	@Override
 	public DisplayInfo selectDisplayInfoById(Integer displayInfoId) {
 		Map<String,?> params = Collections.singletonMap("displayInfoId",displayInfoId);

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+/* 사용하지 X
+ * 업로드 테스트용 컨트롤러 입니다.
+ * */
 @Controller
 class UploadTestController {
 	
