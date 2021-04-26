@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
+			<version>2.7</version>
 		</dependency>
 		
 		<!-- json 라이브러리 databind jackson-core, jackson-annotation에 의존성이 있음 -->
